@@ -115,9 +115,9 @@ def present_choice_double(images, rightid, wrongid):
 	start_time = time()
 	#play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	finished = False
-	timesclicked = 0
-	timesclicked2 = 0
-	## The standard event loop in kelpy -- this loops infinitely to process interactions
+	clicked = [0] * 3
+
+ 	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	for event in kelpy_standard_event_loop(screen, Q, dos):
 		
@@ -129,32 +129,32 @@ def present_choice_double(images, rightid, wrongid):
 			whom = who_was_clicked(dos)
 			
 			if whom is img[1]:  ## which is the button btw
-				if timesclicked > 3:
+				if clicked[1] > 3:
 					pass
 				else:
-					timesclicked = timesclicked + 1
+					clicked[1] = clicked[1] + 1
 					#play_sound(kstimulus("sounds/good_job.wav")) 
 					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 					
 					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
 					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
-					if timesclicked == 3:
-						timesclicked = timesclicked+1
+					if clicked[1] == 3:
+						clicked[1] = clicked[1]+1
 						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 
 			if whom is img[2]:  ## which is the button btw
-				if timesclicked2 > 3:
+				if clicked[2] > 3:
 					pass
 				else:
-					timesclicked2 = timesclicked2 + 1
+					clicked[2] = clicked[2] + 1
 					#play_sound(kstimulus("sounds/good_job.wav")) 
 					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 					
 					Q.append(obj=img[2], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
 					Q.append(obj=img[2], action="scale", amount=(1/1.5), duration=1.0)
-					if timesclicked2 == 3:
-						timesclicked2 = timesclicked2+1
+					if clicked[2] == 3:
+						clicked[2] = clicked[2]+1
 						Q.append(obj=img[2], action='swapblink', position=(1000,400), image=target_images_gray[wrongid], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 			
@@ -202,7 +202,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
-			if whom is img[1]:  ## which is not the button btw
+			if whom is img[1]:  ## which is the button btw
 				
 				play_sound(kstimulus('sounds/Cheek-Pop.wav'), wait=True)
 				Q.append(obj=img[1], action='swapblink', position=double_displayat[0], image=target_images[rightid], period=.05, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
@@ -272,12 +272,12 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 
 # Set up images:
-location = os.path.dirname( __file__ )+"stimuli/"
+location = os.path.dirname( __file__ )+"stimuli/"  ##This returns the filepath relative to this file. We're loading a bunch of things from the stimuli folder.
 
 target_images = [
 location+"bluedrop.png",
 location+"bluewolf.png",
-location+"/bunnyboy.png"
+location+"bunnyboy.png",
 location+"flatmouse.png",
 location+"greenhog.png",
 location+"pokeydog.png",
