@@ -272,32 +272,34 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 
 # Set up images:
+location = os.path.dirname( __file__ )+"stimuli/"
+
 target_images = [
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/bluedrop.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/bluewolf.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/bunnyboy.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/flatmouse.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/greenhog.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/pokeydog.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/polkadotrocker.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/queenbear.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/skimaskbunny.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/thuglion.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/treegirl.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/whitemetalbear.png"
+location+"bluedrop.png",
+location+"bluewolf.png",
+location+"/bunnyboy.png"
+location+"flatmouse.png",
+location+"greenhog.png",
+location+"pokeydog.png",
+location+"polkadotrocker.png",
+location+"queenbear.png",
+location+"skimaskbunny.png",
+location+"thuglion.png",
+location+"treegirl.png",
+location+"whitemetalbear.png"
  ]
-target_images_gray = ["/home/matthew/Documents/CODE/eric-partridge/stimuli/bluedrop_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/bluewolf_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/bunnyboy_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/flatmouse_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/greenhog_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/pokeydog_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/polkadotrocker_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/queenbear_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/skimaskbunny_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/thuglion_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/treegirl_gray.png",
-"/home/matthew/Documents/CODE/eric-partridge/stimuli/whitemetalbear_gray.png" ]
+target_images_gray = [location+"bluedrop_gray.png",
+location+"bluewolf_gray.png",
+location+"bunnyboy_gray.png",
+location+"flatmouse_gray.png",
+location+"greenhog_gray.png",
+location+"pokeydog_gray.png",
+location+"polkadotrocker_gray.png",
+location+"queenbear_gray.png",
+location+"skimaskbunny_gray.png",
+location+"thuglion_gray.png",
+location+"treegirl_gray.png",
+location+"whitemetalbear_gray.png" ]
 target_audio = [ ] ## unimplemented, should contain a list of all the audio intros in order.
 
 button_image = kstimulus("shapes/circle_purple.png")
