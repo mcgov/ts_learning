@@ -281,25 +281,38 @@ location+"bunnyboy.png",
 location+"flatmouse.png",
 location+"greenhog.png",
 location+"pokeydog.png",
+location+"purplepandapony.png",
 location+"polkadotrocker.png",
 location+"queenbear.png",
 location+"skimaskbunny.png",
 location+"thuglion.png",
 location+"treegirl.png",
-location+"whitemetalbear.png"
- ]
-target_images_gray = [location+"bluedrop_gray.png",
+location+"whitemetalbear.png",
+location+"cubehouseguy.png",
+location+"greencatwheels.png",
+location+"greenclownbunny.png",
+location+"yellowegghead.png"
+]
+target_images_gray = [
+location+"bluedrop_gray.png",
 location+"bluewolf_gray.png",
 location+"bunnyboy_gray.png",
 location+"flatmouse_gray.png",
 location+"greenhog_gray.png",
 location+"pokeydog_gray.png",
+location+"purplepandapony_gray.png",
 location+"polkadotrocker_gray.png",
 location+"queenbear_gray.png",
 location+"skimaskbunny_gray.png",
 location+"thuglion_gray.png",
 location+"treegirl_gray.png",
-location+"whitemetalbear_gray.png" ]
+location+"whitemetalbear_gray.png", 
+location+"cubehouseguy_gray.png",
+location+"greencatwheels_gray.png",
+location+"greenclownbunny_gray.png",
+location+"yellowegghead_gray.png"
+]
+
 target_audio = [ ] ## unimplemented, should contain a list of all the audio intros in order.
 
 button_image = kstimulus("shapes/circle_purple.png")
