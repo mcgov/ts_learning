@@ -56,10 +56,12 @@ def present_no_choice_single(images, targetidx):
 	dos = OrderedUpdates(*img) # Draw and update in this order
 	
 	start_time = time()
-	play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
+	#play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	finished = False
+	clicked = [0] * 2
+
 	for event in kelpy_standard_event_loop(screen, Q, dos):
 		
 		# if time()-start_time > MAX_DISPLAY_TIME:
@@ -72,12 +74,21 @@ def present_no_choice_single(images, targetidx):
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
-			if whom is img[0]:  ## which is the button btw
-				play_sound(kstimulus('sounds/Cheek-Pop.wav'))
-				
-				Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-				Q.append(obj=img[1], action="scale", amount=1.5, duration=1.5)  ##append simultaneous doesn't work : (
-				finished = True
+			if whom is img[0]:  ## which isn't the button btw
+				if clicked[1] > 3:
+					pass
+				else:
+					clicked[1] = clicked[1] + 1
+					#play_sound(kstimulus("sounds/good_job.wav")) 
+					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+					
+					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[1] == 3:
+						clicked[1] = clicked[1]+1
+						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+						finished = True
 
 def present_no_choice_double(images, rightid, wrongid):
 	
@@ -96,7 +107,7 @@ def present_no_choice_double(images, rightid, wrongid):
 	Q = DisplayQueue()
 	
 	# Draw a single animation in if you want!
-	
+	clicked = [0] * 3
 	
 
 	# What order do we draw sprites and things in?
@@ -119,13 +130,23 @@ def present_no_choice_double(images, rightid, wrongid):
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
-			if whom is img[0]:  ## which is the button btw
-				
-				play_sound(kstimulus('sounds/Cheek-Pop.wav'), wait=True)
-				Q.append(obj=img[1], action='swapblink', position=double_displayat[0], image=target_images[rightid], period=.05, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-				Q.append(obj=img[1], action="scale", amount=1.5, duration=1.5)  ##append simultaneous doesn't work : (
-				finished = True ## mark us as being finished!
-			
+			if whom is img[0]:  ## which isn't the button btw
+				if clicked[1] > 3:
+					pass
+				else:
+					clicked[1] = clicked[1] + 1
+					#play_sound(kstimulus("sounds/good_job.wav")) 
+					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+					
+					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[1] == 3:
+						clicked[1] = clicked[1]+1
+						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+						finished = True
+
+
 def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 	
 
@@ -148,7 +169,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 	
 	# Draw a single animation in if you want!
 	
-	
+	clicked = [0] * 5
 
 	# What order do we draw sprites and things in?
 	dos = OrderedUpdates(*img) # Draw and update in this order
@@ -170,12 +191,21 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
-			if whom is img[0]:  ## which is the button btw
-				
-				play_sound(kstimulus('sounds/Cheek-Pop.wav'), wait=True)
-				Q.append(obj=img[1], action='swapblink', position=double_displayat[0], image=target_images[rightid], period=.05, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-				Q.append(obj=img[1], action="scale", amount=1.2, duration=1.5)  ##append simultaneous doesn't work : (
-				finished = True ## mark us as being finished!
+			if whom is img[0]:  ## which isn't the button btw
+				if clicked[1] > 3:
+					pass
+				else:
+					clicked[1] = clicked[1] + 1
+					#play_sound(kstimulus("sounds/good_job.wav")) 
+					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+					
+					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[1] == 3:
+						clicked[1] = clicked[1]+1
+						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
+						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+						finished = True
 
 def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7):
 	
@@ -212,6 +242,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 	start_time = time()
 	play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	finished = False
+	clicked = [0] * 9
 	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	for event in kelpy_standard_event_loop(screen, Q, dos):
@@ -226,12 +257,21 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
-			if whom is img[0]:  ## which is the button btw
-				
-				play_sound(kstimulus('sounds/Cheek-Pop.wav'), wait=True)
-				Q.append(obj=img[1], action='swapblink', position=double_displayat[0], image=target_images[rightid], period=.05, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-				Q.append(obj=img[1], action="scale", amount=1.2, duration=1.5)  ##append simultaneous doesn't work : (
-				finished = True ## mark us as being finished!
+			if whom is img[0]:  ## which isn't the button btw
+				if clicked[1] > 3:
+					pass
+				else:
+					clicked[1] = clicked[1] + 1
+					#play_sound(kstimulus("sounds/good_job.wav")) 
+					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+					
+					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[1] == 3:
+						clicked[1] = clicked[1]+1
+						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
+						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+						finished = True
 
 			
 	
@@ -245,30 +285,43 @@ location = os.path.dirname( __file__ )+"stimuli/"
 target_images = [
 location+"bluedrop.png",
 location+"bluewolf.png",
-location+"/bunnyboy.png"
+location+"bunnyboy.png",
 location+"flatmouse.png",
 location+"greenhog.png",
 location+"pokeydog.png",
+location+"purplepandapony.png",
 location+"polkadotrocker.png",
 location+"queenbear.png",
 location+"skimaskbunny.png",
 location+"thuglion.png",
 location+"treegirl.png",
-location+"whitemetalbear.png"
- ]
-target_images_gray = [location+"bluedrop_gray.png",
+location+"whitemetalbear.png",
+location+"cubehouseguy.png",
+location+"greencatwheels.png",
+location+"greenclownbunny.png",
+location+"yellowegghead.png",
+location+"bluebearnoship.png"
+]
+target_images_gray = [
+location+"bluedrop_gray.png",
 location+"bluewolf_gray.png",
 location+"bunnyboy_gray.png",
 location+"flatmouse_gray.png",
 location+"greenhog_gray.png",
 location+"pokeydog_gray.png",
+location+"purplepandapony_gray.png",
 location+"polkadotrocker_gray.png",
 location+"queenbear_gray.png",
 location+"skimaskbunny_gray.png",
 location+"thuglion_gray.png",
 location+"treegirl_gray.png",
-location+"whitemetalbear_gray.png" ]
-target_audio = [ ] ## unimplemented, should contain a list of all the audio intros in order.
+location+"whitemetalbear_gray.png", 
+location+"cubehouseguy_gray.png",
+location+"greencatwheels_gray.png",
+location+"greenclownbunny_gray.png",
+location+"yellowegghead_gray.png",
+location+"bluebearnoship_gray.png"
+]
 
 button_image = kstimulus("shapes/circle_purple.png")
 
@@ -276,33 +329,33 @@ button_image = kstimulus("shapes/circle_purple.png")
 double_displayat = [ (screen.get_width()/4, 400), ((screen.get_width()/4)*3, 400) ] 
 quadruple_displayat= [ ((screen.get_width()/4) + 100, 400), ((screen.get_width()/4)-100, 400),  (((screen.get_width()/4)*3)+100, 400) , (((screen.get_width()/4)*3)-100, 400) ]
 octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4) + OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  ((screen.get_width()/4)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET) , (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET) ]
-##present a number of blocks
-# for block in range(2):
-# ## finally run the thing, also print the block number, the targetidx, and the index of the correct image. ##Note that this may display duplicates as is.
-# ## the last item is the presen_trial function that actually runs the trial.
-# 	targetidx = randint(0,(len(target_images)-1))
-# 	print "SINGLES:"
-# 	print block, targetidx, filename(target_images[targetidx]), present_no_choice_single(target_images_gray, targetidx)
+#present a number of blocks
+for block in range(2):
+## finally run the thing, also print the block number, the targetidx, and the index of the correct image. ##Note that this may display duplicates as is.
+## the last item is the presen_trial function that actually runs the trial.
+	targetidx = randint(0,(len(target_images)-1))
+	print "SINGLES:"
+	print block, targetidx, filename(target_images[targetidx]), present_no_choice_single(target_images, targetidx)
 
-# print "NO CHOICE DOUBLES:"
-# for block in range(4):	
+print "NO CHOICE DOUBLES:"
+for block in range(2):	
 
-# 	targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-# 	shuffle(double_displayat)
-# 	print block, targetidx, filename(target_images[targetidx]), present_no_choice_double(target_images_gray, targetidx, (targetidx-1))
+ 	targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
+ 	shuffle(double_displayat)
+ 	print block, targetidx, filename(target_images[targetidx]), present_no_choice_double(target_images, targetidx, (targetidx-1))
 
-# print "NO CHOICE QUADRUPLES:"
-# for block in range(10):	
+print "NO CHOICE QUADRUPLES:"
+for block in range(2):	
 
-# 	targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-# 	shuffle(quadruple_displayat)
-# 	print block, targetidx, filename(target_images[targetidx]), present_no_choice_quadruple(target_images_gray, targetidx, (targetidx-1), (targetidx-2), (targetidx-3))
+ 	targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
+ 	shuffle(quadruple_displayat)
+ 	print block, targetidx, filename(target_images[targetidx]), present_no_choice_quadruple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3))
 
 print "NO CHOICE OCTUPLES:"
-for block in range(10):	
+for block in range(2):	
 
 	targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-	shuffle(quadruple_displayat)
-	print block, targetidx, filename(target_images[targetidx]), present_no_choice_octuple(target_images_gray, targetidx, (targetidx-1), (targetidx-2), (targetidx-3), (targetidx-4), (targetidx-5) ,(targetidx-6), (targetidx-7) )
+ 	shuffle(quadruple_displayat)
+ 	print block, targetidx, filename(target_images[targetidx]), present_no_choice_octuple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3), (targetidx-4), (targetidx-5) ,(targetidx-6), (targetidx-7) )
 
 
