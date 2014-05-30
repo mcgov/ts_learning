@@ -104,20 +104,29 @@ def present_no_choice_double(images, rightid, wrongid, order):
 	
 	guys = [None ,rightid, wrongid]
 	img = [None] * 3
-	
+	totalclicks = -1
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5)
 	img[1] = CommandableImageSprite( screen, double_displayat[0], images[rightid], scale=IMAGE_SCALE)
 	img[2] = CommandableImageSprite( screen, double_displayat[1] , images[wrongid], scale=IMAGE_SCALE)
+	
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
-	
+	def guytonumber(person):  ##should probably be a switch
+			print person
+			if person == rightid:
+				return 1
+			elif person == wrongid:
+				return 2
+			else:
+				print "error, something went super wrong"
+
 	# A queue of animation operations
 	Q = DisplayQueue()
 	
 	# Draw a single animation in if you want!
-	clicked = [0] * 3
+	
 	
 
 	# What order do we draw sprites and things in?
@@ -126,7 +135,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 	start_time = time()
 	#play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	finished = False
-	totalclicks = -1
+	clicked = [0] * 3
 	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	for event in kelpy_standard_event_loop(screen, Q, dos):
@@ -139,33 +148,36 @@ def present_no_choice_double(images, rightid, wrongid, order):
 			if finished: ## If this is the second click, move on to the next thing!
 				break
 			# check if each of our images was clicked
-			whom = who_was_clicked(dos)
-					
+			whom = who_was_clicked( dos )
+			
 			if whom is img[0]:  ## which is the button btw
+				print "BUTTON PRESS: " + str(time() - start_time) , 
 				totalclicks = totalclicks+1
-				if clicked [1] > 3 and clicked[2] > 3:
+				if clicked[1] >3 and clicked[2]>3 :
 					pass
 				else:
-					clicked[order[totalclicks]] = clicked[order[totalclicks]] + 1
-					if clicked[order[totalclicks]] == 1:
-						Q.append(obj='sound', file=(target_audio1[guys[order[totalclicks]]]) )
-					elif clicked[order[totalclicks]] == 2:
-						Q.append(obj='sound', file=(target_audio2[guys[order[totalclicks]]]) )
-					elif clicked[order[totalclicks]] == 3:
-						Q.append(obj='sound', file=(target_audio3[guys[order[totalclicks]]]) )
+					
+					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
+					print filename(target_images[guys[index]])
+					clicked[index] = clicked[index] + 1
+					if clicked[index] == 1:
+						Q.append(obj='sound', file=(target_audio1[guys[index]]) )
+					elif clicked[index] == 2:
+						Q.append(obj='sound', file=(target_audio2[guys[index]]) )
+					elif clicked[index] == 3:
+						Q.append(obj='sound', file=(target_audio3[guys[index]]) )
 					else:
 						pass
 					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 					
-					Q.append(obj=img[order[totalclicks]], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[order[totalclicks]], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[order[totalclicks]] == 3:
-						clicked[order[totalclicks]] = clicked[order[totalclicks]]+1
-						Q.append(obj=img[order[totalclicks]], action='swapblink', position=(1000,400), image=target_images_gray[guys[order[totalclicks]]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+					Q.append(obj=img[index], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[index], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[index] == 3:
+						clicked[index] = clicked[index]+1
+						Q.append(obj=img[index], action='swapblink', position=(1000,400), image=target_images_gray[guys[index]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-						if clicked[1] >3 and clicked[2]>3:
+						if clicked[1] >3 and clicked[2]>3 :
 							finished = True
-
 
 def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	
@@ -181,6 +193,19 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	img[3] = CommandableImageSprite( screen, quadruple_displayat[2], images[wrong2], scale=QUAD_IMAGE_SCALE )
 	img[4] = CommandableImageSprite( screen, quadruple_displayat[3], images[wrong3], scale=QUAD_IMAGE_SCALE )
 
+	def guytonumber(person):  ##should probably be a switch
+			print person
+			if person == rightid:
+				return 1
+			elif person == wrong1:
+				return 2
+			elif person == wrong2:
+				return 3
+			elif person == wrong3:
+				return 4
+			else:
+				print "error, something went super wrong"
+
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
@@ -190,7 +215,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	
 	# Draw a single animation in if you want!
 	
-	clicked = [0] * 5
+	
 
 	# What order do we draw sprites and things in?
 	dos = OrderedUpdates(*img) # Draw and update in this order
@@ -198,6 +223,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	start_time = time()
 	#play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	finished = False
+	clicked = [0] * 5
 	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	for event in kelpy_standard_event_loop(screen, Q, dos):
@@ -210,31 +236,35 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 			if finished: ## If this is the second click, move on to the next thing!
 				break
 			# check if each of our images was clicked
-			whom = who_was_clicked(dos)
-					
+			whom = who_was_clicked( dos )
+			
 			if whom is img[0]:  ## which is the button btw
+				print "BUTTON PRESS: " + str(time() - start_time) , 
 				totalclicks = totalclicks+1
-				if clicked [1] > 3 and clicked[2] > 3 and clicked[4] > 3 and clicked[3] >3:
+				if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3:
 					pass
 				else:
-					clicked[order[totalclicks]] = clicked[order[totalclicks]] + 1
-					if clicked[order[totalclicks]] == 1:
-						Q.append(obj='sound', file=(target_audio1[guys[order[totalclicks]]]) )
-					elif clicked[order[totalclicks]] == 2:
-						Q.append(obj='sound', file=(target_audio2[guys[order[totalclicks]]]) )
-					elif clicked[order[totalclicks]] == 3:
-						Q.append(obj='sound', file=(target_audio3[guys[order[totalclicks]]]) )
+					
+					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
+					print filename(target_images[guys[index]])
+					clicked[index] = clicked[index] + 1
+					if clicked[index] == 1:
+						Q.append(obj='sound', file=(target_audio1[guys[index]]) )
+					elif clicked[index] == 2:
+						Q.append(obj='sound', file=(target_audio2[guys[index]]) )
+					elif clicked[index] == 3:
+						Q.append(obj='sound', file=(target_audio3[guys[index]]) )
 					else:
 						pass
 					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 					
-					Q.append(obj=img[order[totalclicks]], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[order[totalclicks]], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[order[totalclicks]] == 3:
-						clicked[order[totalclicks]] = clicked[order[totalclicks]]+1
-						Q.append(obj=img[order[totalclicks]], action='swapblink', position=(1000,400), image=target_images_gray[guys[order[totalclicks]]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
+					Q.append(obj=img[index], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[index], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[index] == 3:
+						clicked[index] = clicked[index]+1
+						Q.append(obj=img[index], action='swapblink', position=(1000,400), image=target_images_gray[guys[index]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-						if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3:
+						if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3 :
 							finished = True
 
 def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7, order):
@@ -255,6 +285,27 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 	img[7] = CommandableImageSprite( screen, octuple_displayat[6], images[wrong6], scale=QUAD_IMAGE_SCALE )
 	img[8] = CommandableImageSprite( screen, octuple_displayat[7], images[wrong7], scale=QUAD_IMAGE_SCALE )
 
+
+	def guytonumber(person):  ##should probably be a switch
+		print person
+		if person == rightid:
+			return 1
+		elif person == wrong1:
+			return 2
+		elif person == wrong2:
+			return 3
+		elif person == wrong3:
+			return 4
+		elif person == wrong4:
+			return 5
+		elif person == wrong5:
+			return 6
+		elif person == wrong6:
+			return 7
+		elif person == wrong7:
+			return 8
+		else:
+			print "error, something went super wrong"
 
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -286,29 +337,33 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 			if finished: ## If this is the second click, move on to the next thing!
 				break
 			# check if each of our images was clicked
-			whom = who_was_clicked(dos)
-					
+			whom = who_was_clicked( dos )
+			
 			if whom is img[0]:  ## which is the button btw
+				print "BUTTON PRESS: " + str(time() - start_time) , 
 				totalclicks = totalclicks+1
 				if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8]>3:
 					pass
 				else:
-					clicked[order[totalclicks]] = clicked[order[totalclicks]] + 1
-					if clicked[order[totalclicks]] == 1:
-						Q.append(obj='sound', file=(target_audio1[guys[order[totalclicks]]]) )
-					elif clicked[order[totalclicks]] == 2:
-						Q.append(obj='sound', file=(target_audio2[guys[order[totalclicks]]]) )
-					elif clicked[order[totalclicks]] == 3:
-						Q.append(obj='sound', file=(target_audio3[guys[order[totalclicks]]]) )
+					
+					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
+					print filename(target_images[guys[index]])
+					clicked[index] = clicked[index] + 1
+					if clicked[index] == 1:
+						Q.append(obj='sound', file=(target_audio1[guys[index]]) )
+					elif clicked[index] == 2:
+						Q.append(obj='sound', file=(target_audio2[guys[index]]) )
+					elif clicked[index] == 3:
+						Q.append(obj='sound', file=(target_audio3[guys[index]]) )
 					else:
 						pass
 					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 					
-					Q.append(obj=img[order[totalclicks]], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[order[totalclicks]], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[order[totalclicks]] == 3:
-						clicked[order[totalclicks]] = clicked[order[totalclicks]]+1
-						Q.append(obj=img[order[totalclicks]], action='swapblink', position=(1000,400), image=target_images_gray[guys[order[totalclicks]]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
+					Q.append(obj=img[index], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+					Q.append(obj=img[index], action="scale", amount=(1/1.5), duration=1.0)
+					if clicked[index] == 3:
+						clicked[index] = clicked[index]+1
+						Q.append(obj=img[index], action='swapblink', position=(1000,400), image=target_images_gray[guys[index]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8]>3:
 							finished = True
@@ -443,58 +498,67 @@ with open('display_this_stuff.csv', 'rb') as f:
 		## so easy!
 		if row[0] == 'double':
 			parsed_order = [
-			int(row[3][1]),
-			int(row[3][2]),
-			int(row[3][3]),
-			int(row[3][4]),
-			int(row[3][5]),
-			int(row[3][6]) ]
-			print filename(target_images[int(row[1])]), present_no_choice_double(target_images, int(row[1]), int(row[2]), parsed_order)
+			int(row[3][1], 16),
+			int(row[3][2], 16),
+			int(row[3][3], 16),
+			int(row[3][4], 16),
+			int(row[3][5], 16),
+			int(row[3][6], 16) ]
+			print filename(target_images[int(row[1])]),filename(target_images[int(row[2])]), present_no_choice_double(target_images, int(row[1]), int(row[2]), parsed_order)
 		if row[0] == 'quad':
 			parsed_order = [
-			int(row[5][1]),
-			int(row[5][2]),
-			int(row[5][3]),
-			int(row[5][4]),
-			int(row[5][5]),
-			int(row[5][6]),
-			int(row[5][7]),
-			int(row[5][8]),
-			int(row[5][9]),
-			int(row[5][10]),
-			int(row[5][11]),
-			int(row[5][12])
+			int(row[5][1], 16),
+			int(row[5][2], 16),
+			int(row[5][3], 16),
+			int(row[5][4], 16),
+			int(row[5][5], 16),
+			int(row[5][6], 16),
+			int(row[5][7], 16),
+			int(row[5][8], 16),
+			int(row[5][9], 16),
+			int(row[5][10], 16),
+			int(row[5][11], 16),
+			int(row[5][12], 16)
 			]
-			print filename(target_images[int(row[1])]), present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
+			print filename(target_images[int(row[1], 16)]), filename(target_images[int(row[2], 16)]), filename(target_images[int(row[3], 16)]), filename(target_images[int(row[4], 16)]),
+			print present_no_choice_quadruple(target_images, int(row[1], 16), int(row[2], 16), int(row[3], 16), int(row[4], 16), parsed_order)
 		if row[0] == 'oct':
 			parsed_order = [
-			int(row[9][1]),
-			int(row[9][2]),
-			int(row[9][3]),
-			int(row[9][4]),
-			int(row[9][5]),
-			int(row[9][6]),
-			int(row[9][7]),
-			int(row[9][8]),
-			int(row[9][9]),
-			int(row[9][10]),
-			int(row[9][11]),
-			int(row[9][12]),
-			int(row[9][13]),
-			int(row[9][14]),
-			int(row[9][15]),
-			int(row[9][16]),
-			int(row[9][17]),
-			int(row[9][18]),
-			int(row[9][19]),
-			int(row[9][20]),
-			int(row[9][21]),
-			int(row[9][22]),
-			int(row[9][23]),
-			int(row[9][24])
+			int(row[9][1],16),
+			int(row[9][2],16),
+			int(row[9][3],16),
+			int(row[9][4],16),
+			int(row[9][5],16),
+			int(row[9][6],16),
+			int(row[9][7],16),
+			int(row[9][8],16),
+			int(row[9][9],16),
+			int(row[9][10],16),
+			int(row[9][11],16),
+			int(row[9][12],16),
+			int(row[9][13],16),
+			int(row[9][14],16),
+			int(row[9][15],16),
+			int(row[9][16],16),
+			int(row[9][17],16),
+			int(row[9][18],16),
+			int(row[9][19],16),
+			int(row[9][20],16),
+			int(row[9][21],16),
+			int(row[9][22],16),
+			int(row[9][23],16),
+			int(row[9][24],16)
 			]
-			print filename(target_images[int(row[1])]), present_no_choice_octuple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), parsed_order)
-
+			print filename(target_images[int(row[1],16)]), 
+			filename(target_images[int(row[2],16)]), 
+			filename(target_images[int(row[3],16)]), 
+			filename(target_images[int(row[4],16)]), 
+			filename(target_images[int(row[5],16)]), 
+			filename(target_images[int(row[6],16)]), 
+			filename(target_images[int(row[7],16)]) , 
+			filename(target_images[int(row[8],16)])
+			print present_no_choice_octuple(target_images, int(row[1],16), int(row[2],16), int(row[3],16), int(row[4],16), int(row[5],16), int(row[6],16), int(row[7],16), int(row[8],16), parsed_order)
+			### No choice octuple requires a 10-tuple, the array of all images to be used, the index of the images to be displayed (8), and a sequence of numbers that represents the order in which to display them, numbers 1-8
 
 
 

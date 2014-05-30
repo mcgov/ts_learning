@@ -50,13 +50,13 @@ def present_choice_single(images, targetidx):
 	# A queue of animation operations
 	Q = DisplayQueue()
 	
-	timesclicked = 0
+	timesclicked = 0  ##keep track of how many times things have been clicked! this one is just a single int
 
 	# What order do we draw sprites and things in?
 	dos = OrderedUpdates(*img) # Draw and update in this order
 	
-	start_time = time()
-	#Q.append(obj='sound', file=kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
+	start_time = time()  ## start logging the start time. start.
+	
 	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	finished = False
@@ -80,7 +80,7 @@ def present_choice_single(images, targetidx):
 
 			if whom is img[1]:  ## which is the button btw
 				if timesclicked > 3:
-					break
+					return "single,"+ str(targetidx)
 				else:
 					timesclicked = timesclicked + 1
 					if timesclicked == 1:
@@ -97,7 +97,7 @@ def present_choice_single(images, targetidx):
 
 def present_choice_double(images, rightid, wrongid):
 	
-
+	guys = [None, rightid, wrongid]
 	img = [None] * 3
 	
 	## set the image locations
@@ -122,7 +122,7 @@ def present_choice_double(images, rightid, wrongid):
 	#Q.append(obj='sound', file=kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	finished = False
 	clicked = [0] * 3
-
+	outputString= "double," + str(rightid) + "," + str(wrongid) +  ",("
  	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	for event in kelpy_standard_event_loop(screen, Q, dos):
@@ -131,53 +131,32 @@ def present_choice_double(images, rightid, wrongid):
 		# If the event is a click:
 		if is_click(event):
 			if clicked[1] > 3 and clicked[2] >3:
-			  break
-			# check if each of our images was clicked
+				return outputString +")"
+							# check if each of our images was clicked
 			whom = who_was_clicked(dos)
-			
-			if whom is img[1]:  ## which is the button btw
-				if clicked[1] > 3:
-					pass
-				else:
-					clicked[1] = clicked[1] + 1
-					if clicked[1] == 1:
-						Q.append(obj='sound', file=(target_audio2[rightid]) )
-					elif clicked[1] == 2:
-						Q.append(obj='sound', file=(target_audio2[rightid]) )
-					elif clicked[1] == 3:
-						Q.append(obj='sound', file=(target_audio3[rightid]) )
-					else:
+			for i in range(1,3):
+				if whom is img[i]:  ## which is the button btw
+					if clicked[i] > 3:
 						pass
-					
-					
-					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[1] == 3:
-						clicked[1] = clicked[1]+1
-						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[2]:  ## which is not the button
-				if clicked[2] > 3:
-					pass
-				else:
-					clicked[2] = clicked[2] + 1
-					if clicked[2] == 1:
-						Q.append(obj='sound', file=(target_audio[wrongid]) )
-					elif clicked[2] == 2:
-						Q.append(obj='sound', file= target_audio2[wrongid]) 
-					elif clicked[2] == 3:
-						Q.append(obj='sound', file=target_audio3[wrongid]) 
 					else:
-						pass
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[2], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[2], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[2] == 3:
-						clicked[2] = clicked[2]+1
-						Q.append(obj=img[2], action='swapblink', position=(1000,400), image=target_images_gray[wrongid], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+						outputString = outputString+ str(format(guys[i], 'x'))
+						clicked[i] = clicked[i] + 1
+						if clicked[i] == 1:
+							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
+						elif clicked[i] == 2:
+							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
+						elif clicked[i] == 3:
+							Q.append(obj='sound', file=(target_audio3[guys[i]]) )
+						else:
+							pass
+						
+						
+						Q.append(obj=img[i], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
+						if clicked[i] == 3:
+							clicked[i] = clicked[i]+1
+							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 			
 def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 	
@@ -192,7 +171,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 	img[3] = CommandableImageSprite( screen, quadruple_displayat[2], images[wrong2], scale=QUAD_IMAGE_SCALE )
 	img[4] = CommandableImageSprite( screen, quadruple_displayat[3], images[wrong3], scale=QUAD_IMAGE_SCALE )
 
-
+	outputString= "quad," + str(rightid) + "," + str(wrong1) + "," + str(wrong2) + "," + str(wrong3) +  ",("
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	
@@ -219,7 +198,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 		# If the event is a click:
 		if is_click(event):
 			if clicked[1] >3 and clicked[2] > 3 and clicked [3] > 3 and clicked[4] > 3:
-			  break
+				return outputString + ")"
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
@@ -227,6 +206,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 				if clicked[1] > 3:
 					pass
 				else:
+					outputString= outputString + str(rightid)
 					clicked[1] = clicked[1] + 1
 					if clicked[1] == 1:
 						Q.append(obj='sound', file=(target_audio2[rightid]) )
@@ -249,6 +229,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 				if clicked[2] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong1)
 					clicked[2] = clicked[2] + 1
 					if clicked[2] == 1:
 						Q.append(obj='sound', file=target_audio[wrong1]) 
@@ -271,6 +252,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 				if clicked[3] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong2)
 					clicked[3] = clicked[3] + 1
 					if clicked[3] == 1:
 						Q.append(obj='sound', file=target_audio[wrong2]) 
@@ -293,6 +275,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 				if clicked[4] > 3:
 					pass
 				else:
+					outputString = outputString + str(wrong3)
 					clicked[4] = clicked[4] + 1
 					if clicked[4] == 1:
 						Q.append(obj='sound', file=target_audio[wrong3]) 
@@ -329,6 +312,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 	img[8] = CommandableImageSprite( screen, octuple_displayat[7], images[wrong7], scale=QUAD_IMAGE_SCALE )
 
 
+	outputString= "quad," + str(rightid) + "," + str(wrong1) + "," + str(wrong2) + "," + str(wrong3) +  "," + str(wrong4) + "," + str(wrong5) + "," + str(wrong6) + str(wrong7) +  ",("
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
@@ -356,7 +340,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 		# If the event is a click:
 		if is_click(event):
 			if clicked[1] >3 and clicked[2] >3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8] > 3:
-			  break
+				return outputString + ")"
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
@@ -364,6 +348,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[1] > 3:
 					pass
 				else:
+					outputString= outputString + str(rightid)
 					clicked[1] = clicked[1] + 1
 					if clicked[1] == 1:
 						Q.append(obj='sound', file=(target_audio2[rightid]) )
@@ -386,6 +371,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[2] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong1)
 					clicked[2] = clicked[2] + 1
 					if clicked[2] == 1:
 						Q.append(obj='sound', file=target_audio[wrong1]) 
@@ -408,6 +394,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[3] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong2)
 					clicked[3] = clicked[3] + 1
 					if clicked[3] == 1:
 						Q.append(obj='sound', file=target_audio[wrong2]) 
@@ -431,6 +418,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[4] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong3)
 					clicked[4] = clicked[4] + 1
 					if clicked[4] == 1:
 						Q.append(obj='sound', file=target_audio[wrong3]) 
@@ -453,6 +441,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[5] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong4)
 					clicked[5] = clicked[5] + 1
 					if clicked[5] == 1:
 						Q.append(obj='sound', file=target_audio[wrong4]) 
@@ -476,6 +465,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[6] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong5)
 					clicked[6] = clicked[6] + 1
 					if clicked[6] == 1:
 						Q.append(obj='sound', file=target_audio[wrong5]) 
@@ -499,6 +489,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[7] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong6)
 					clicked[7] = clicked[7] + 1
 					if clicked[7] == 1:
 						Q.append(obj='sound', file=target_audio[wrong6]) 
@@ -522,6 +513,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 				if clicked[8] > 3:
 					pass
 				else:
+					outputString= outputString + str(wrong7)
 					clicked[8] = clicked[8] + 1
 					if clicked[8] == 1:
 						Q.append(obj='sound', file=target_audio[wrong7]) 
@@ -665,11 +657,12 @@ octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSE
 #print "SINGLES:"
 #print targetidx, filename(target_images[targetidx]), present_choice_single(target_images, targetidx)
 
-#print "CHOICE DOUBLES:"
+print "CHOICE DOUBLES:"
 
-#targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-#shuffle(double_displayat)
-#print targetidx, filename(target_images[targetidx]), present_choice_double(target_images, targetidx, (targetidx-1))
+targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
+shuffle(double_displayat)
+print targetidx, filename(target_images[targetidx])
+print present_choice_double(target_images, targetidx, (targetidx-1))
 
 #print "CHOICE QUADRUPLES:"
 #for block in range(10):	
@@ -678,10 +671,10 @@ octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSE
   #shuffle(quadruple_displayat)
   #print targetidx, filename(target_images[targetidx]), present_choice_quadruple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3))
 
-print "CHOICE OCTUPLES:"
+# print "CHOICE OCTUPLES:"
 	
-targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-shuffle(quadruple_displayat)
-print targetidx, filename(target_images[targetidx]), present_choice_octuple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3), (targetidx-4), (targetidx-5) ,(targetidx-6), (targetidx-7) )
+# targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
+# shuffle(quadruple_displayat)
+# print targetidx, filename(target_images[targetidx]), present_choice_octuple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3), (targetidx-4), (targetidx-5) ,(targetidx-6), (targetidx-7) )
 
 
