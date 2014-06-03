@@ -520,8 +520,8 @@ with open('display_this_stuff.csv', 'rb') as f:
 			int(row[5][11], 16),
 			int(row[5][12], 16)
 			]
-			print filename(target_images[int(row[1], 16)]), filename(target_images[int(row[2], 16)]), filename(target_images[int(row[3], 16)]), filename(target_images[int(row[4], 16)]),
-			print present_no_choice_quadruple(target_images, int(row[1], 16), int(row[2], 16), int(row[3], 16), int(row[4], 16), parsed_order)
+			print filename(target_images[int(row[1])]), filename(target_images[int(row[2])]), filename(target_images[int(row[3])]), filename(target_images[int(row[4])]),
+			print present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
 		if row[0] == 'oct':
 			parsed_order = [
 			int(row[9][1],16),
@@ -557,7 +557,7 @@ with open('display_this_stuff.csv', 'rb') as f:
 			filename(target_images[int(row[6],16)]), 
 			filename(target_images[int(row[7],16)]) , 
 			filename(target_images[int(row[8],16)])
-			print present_no_choice_octuple(target_images, int(row[1],16), int(row[2],16), int(row[3],16), int(row[4],16), int(row[5],16), int(row[6],16), int(row[7],16), int(row[8],16), parsed_order)
+			print present_no_choice_octuple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), parsed_order)
 			### No choice octuple requires a 10-tuple, the array of all images to be used, the index of the images to be displayed (8), and a sequence of numbers that represents the order in which to display them, numbers 1-8
 
 

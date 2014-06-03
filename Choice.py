@@ -142,7 +142,7 @@ def present_choice_double(images, rightid, wrongid):
 						outputString = outputString+ str(format(guys[i], 'x'))
 						clicked[i] = clicked[i] + 1
 						if clicked[i] == 1:
-							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
+							Q.append(obj='sound', file=(target_audio[guys[i]]) )
 						elif clicked[i] == 2:
 							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
 						elif clicked[i] == 3:
@@ -162,7 +162,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 	
 
 	img = [None] * 5
-	
+	guys = [None, rightid, wrong1, wrong2, wrong3]
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5, brightness=.5)
@@ -202,103 +202,35 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
-			if whom is img[1]:  ## which is the button btw
-				if clicked[1] > 3:
-					pass
-				else:
-					outputString= outputString + str(rightid)
-					clicked[1] = clicked[1] + 1
-					if clicked[1] == 1:
-						Q.append(obj='sound', file=(target_audio2[rightid]) )
-					elif clicked[1] == 2:
-						Q.append(obj='sound', file=(target_audio2[rightid]) )
-					elif clicked[1] == 3:
-						Q.append(obj='sound', file=target_audio3[rightid] ) 
-					else:
-						pass 
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[1] == 3:
-						clicked[1] = clicked[1]+1
-						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[2]:  ## which is the button btw
-				if clicked[2] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong1)
-					clicked[2] = clicked[2] + 1
-					if clicked[2] == 1:
-						Q.append(obj='sound', file=target_audio[wrong1]) 
-					elif clicked[2] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong1])
-					elif clicked[2] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong1])
-					else:
+			for i in range(1,5):
+				if whom is img[i]:  ## which is the button btw
+					if clicked[i] > 3:
 						pass
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[2], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[2], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[2] == 3:
-						clicked[2] = clicked[2]+1
-						Q.append(obj=img[2], action='swapblink', position=(1000,400), image=target_images_gray[wrong1], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[3]:  ## which is the button btw
-				if clicked[3] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong2)
-					clicked[3] = clicked[3] + 1
-					if clicked[3] == 1:
-						Q.append(obj='sound', file=target_audio[wrong2]) 
-					elif clicked[3] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong2])
-					elif clicked[3] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong2])
 					else:
-						pass
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[3], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[3], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[3] == 3:
-						clicked[3] = clicked[3]+1
-						Q.append(obj=img[3], action='swapblink', position=(1000,400), image=target_images_gray[wrong2], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[4]:  ## which is the button btw
-				if clicked[4] > 3:
-					pass
-				else:
-					outputString = outputString + str(wrong3)
-					clicked[4] = clicked[4] + 1
-					if clicked[4] == 1:
-						Q.append(obj='sound', file=target_audio[wrong3]) 
-					elif clicked[4] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong3])
-					elif clicked[4] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong3])
-					else:
-					  pass
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[4], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[4], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[4] == 3:
-						clicked[4] = clicked[4]+1
-						Q.append(obj=img[4], action='swapblink', position=(1000,400), image=target_images_gray[wrong3], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+						outputString = outputString+ str(format(guys[i], 'x'))
+						clicked[i] = clicked[i] + 1
+						if clicked[i] == 1:
+							Q.append(obj='sound', file=(target_audio[guys[i]]) )
+						elif clicked[i] == 2:
+							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
+						elif clicked[i] == 3:
+							Q.append(obj='sound', file=(target_audio3[guys[i]]) )
+						else:
+							pass
+						
+						
+						Q.append(obj=img[i], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
+						if clicked[i] == 3:
+							clicked[i] = clicked[i]+1
+							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 			
 def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7):
 	
 
 	img = [None] * 9
-	
+	guys = [None, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7]
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5, brightness=.5)
@@ -344,195 +276,30 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
-			if whom is img[1]:  ## which is the button btw
-				if clicked[1] > 3:
-					pass
-				else:
-					outputString= outputString + str(rightid)
-					clicked[1] = clicked[1] + 1
-					if clicked[1] == 1:
-						Q.append(obj='sound', file=(target_audio2[rightid]) )
-					elif clicked[1] == 2:
-						Q.append(obj='sound', file=target_audio2[rightid])
-					elif clicked[1] == 3:
-						Q.append(obj='sound', file=target_audio3[rightid])
-					else:
-						pass 
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[1], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[1] == 3:
-						clicked[1] = clicked[1]+1
-						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[rightid], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[2]:  ## which is the button btw
-				if clicked[2] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong1)
-					clicked[2] = clicked[2] + 1
-					if clicked[2] == 1:
-						Q.append(obj='sound', file=target_audio[wrong1]) 
-					elif clicked[2] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong1])
-					elif clicked[2] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong1])
-					else:
-						pass  
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[2], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[2], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[2] == 3:
-						clicked[2] = clicked[2]+1
-						Q.append(obj=img[2], action='swapblink', position=(1000,400), image=target_images_gray[wrong1], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[3]:  ## which is the button btw
-				if clicked[3] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong2)
-					clicked[3] = clicked[3] + 1
-					if clicked[3] == 1:
-						Q.append(obj='sound', file=target_audio[wrong2]) 
-					elif clicked[3] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong2])
-					elif clicked[3] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong2])
-					else:
+			for i in range(1,9):
+				if whom is img[i]:  ## which is the button btw
+					if clicked[i] > 3:
 						pass
-
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+					else:
+						outputString = outputString+ str(format(guys[i], 'x'))
+						clicked[i] = clicked[i] + 1
+						if clicked[i] == 1:
+							Q.append(obj='sound', file=(target_audio[guys[i]]) )
+						elif clicked[i] == 2:
+							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
+						elif clicked[i] == 3:
+							Q.append(obj='sound', file=(target_audio3[guys[i]]) )
+						else:
+							pass
 						
-					Q.append(obj=img[3], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[3], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[3] == 3:
-						clicked[3] = clicked[3]+1
-						Q.append(obj=img[3], action='swapblink', position=(1000,400), image=target_images_gray[wrong2], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[4]:  ## which is the button btw
-				if clicked[4] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong3)
-					clicked[4] = clicked[4] + 1
-					if clicked[4] == 1:
-						Q.append(obj='sound', file=target_audio[wrong3]) 
-					elif clicked[4] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong3])
-					elif clicked[4] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong3])
-					else:
-						pass
-					
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
 						
-					Q.append(obj=img[4], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[4], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[4] == 3:
-						clicked[4] = clicked[4]+1
-						Q.append(obj=img[4], action='swapblink', position=(1000,400), image=target_images_gray[wrong3], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-			if whom is img[5]:  ## which is the button btw
-				if clicked[5] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong4)
-					clicked[5] = clicked[5] + 1
-					if clicked[5] == 1:
-						Q.append(obj='sound', file=target_audio[wrong4]) 
-					elif clicked[5] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong4])
-					elif clicked[5] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong4])
-					else:
-						pass
-					
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-						
-					Q.append(obj=img[5], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[5], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[5] == 3:
-						clicked[5] = clicked[5]+1
-						Q.append(obj=img[5], action='swapblink', position=(1000,400), image=target_images_gray[wrong4], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[6]:  ## which is the button btw
-				if clicked[6] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong5)
-					clicked[6] = clicked[6] + 1
-					if clicked[6] == 1:
-						Q.append(obj='sound', file=target_audio[wrong5]) 
-					elif clicked[6] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong5])
-					elif clicked[6] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong5])
-					else:
-						pass					
-
-					#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[6], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[6], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[6] == 3:
-						clicked[6] = clicked[6]+1
-						Q.append(obj=img[6], action='swapblink', position=(1000,400), image=target_images_gray[wrong5], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[7]:  ## which is the button btw
-				if clicked[7] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong6)
-					clicked[7] = clicked[7] + 1
-					if clicked[7] == 1:
-						Q.append(obj='sound', file=target_audio[wrong6]) 
-					elif clicked[7] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong6])
-					elif clicked[7] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong6])
-					else:
-						pass 
-
-				#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[7], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[7], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[7] == 3:
-						clicked[7] = clicked[7]+1
-						Q.append(obj=img[7], action='swapblink', position=(1000,400), image=target_images_gray[wrong6], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-
-			if whom is img[8]:  ## which is the button btw
-				if clicked[8] > 3:
-					pass
-				else:
-					outputString= outputString + str(wrong7)
-					clicked[8] = clicked[8] + 1
-					if clicked[8] == 1:
-						Q.append(obj='sound', file=target_audio[wrong7]) 
-					elif clicked[8] == 2:
-						Q.append(obj='sound', file=target_audio2[wrong7])
-					elif clicked[8] == 3:
-						Q.append(obj='sound', file=target_audio3[wrong7])
-					else:
-						pass 
-
-				#Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
-					
-					Q.append(obj=img[8], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
-					Q.append(obj=img[8], action="scale", amount=(1/1.5), duration=1.0)
-					if clicked[8] == 3:
-						clicked[8] = clicked[8]+1
-						Q.append(obj=img[8], action='swapblink', position=(1000,400), image=target_images_gray[wrong7], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
-						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
-	
+						Q.append(obj=img[i], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
+						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
+						if clicked[i] == 3:
+							clicked[i] = clicked[i]+1
+							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
+			
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Main experiment
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
@@ -653,28 +420,43 @@ octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSE
 ## the last item is the presen_trial function that actually runs the trial.
 
 
-#targetidx = randint(0,(len(target_images)-1))
-#print "SINGLES:"
-#print targetidx, filename(target_images[targetidx]), present_choice_single(target_images, targetidx)
+targetidx = randint(0,(len(target_images)-1))
+print "CHOICE SINGLES:"
+print targetidx, filename(target_images[targetidx]), present_choice_single(target_images, targetidx)
 
 print "CHOICE DOUBLES:"
+for block in range(2):	
+	seed1 = randint(0,(len(target_images)-1))
+	seed2 = randint(0,(len(target_images)-1))
 
-targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-shuffle(double_displayat)
-print targetidx, filename(target_images[targetidx])
-print present_choice_double(target_images, targetidx, (targetidx-1))
+	shuffle(double_displayat)
+	print block, filename(target_images[seed1]), filename(target_images[seed2])
+	print block, present_choice_double(target_images, seed1, seed2)
 
-#print "CHOICE QUADRUPLES:"
-#for block in range(10):	
+print "CHOICE QUADRUPLES:"
+for block in range(2):	
 
-  #targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-  #shuffle(quadruple_displayat)
-  #print targetidx, filename(target_images[targetidx]), present_choice_quadruple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3))
+  seed1 = randint(0,(len(target_images)-1))
+  seed2 = randint(0,(len(target_images)-1))
+  seed3 = randint(0,(len(target_images)-1))
+  seed4 = randint(0,(len(target_images)-1)) #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
+  shuffle(quadruple_displayat)
+  print block, filename(target_images[seed1]), filename(target_images[seed2]),filename(target_images[seed3]) ,filename(target_images[seed4]) 
+  print block, present_choice_quadruple(target_images, seed1, seed2, seed3, seed4)
 
-# print "CHOICE OCTUPLES:"
-	
-# targetidx = randint(0,(len(target_images)-1)) #pick a new image to start at.
-# shuffle(quadruple_displayat)
-# print targetidx, filename(target_images[targetidx]), present_choice_octuple(target_images, targetidx, (targetidx-1), (targetidx-2), (targetidx-3), (targetidx-4), (targetidx-5) ,(targetidx-6), (targetidx-7) )
+print "CHOICE OCTUPLES:"
+for block in range (2):      ########################## problem right now is that this will give duplicate entries! laame. have to fix this tomorrow
+	seed1 = randint(0,(len(target_images)-1))
+	seed2 = randint(0,(len(target_images)-1))
+	seed3 = randint(0,(len(target_images)-1))
+	seed4 = randint(0,(len(target_images)-1))	
+	seed5 = randint(0,(len(target_images)-1))
+	seed6 = randint(0,(len(target_images)-1))
+	seed7 = randint(0,(len(target_images)-1))
+	seed8 = randint(0,(len(target_images)-1))
+
+	shuffle(quadruple_displayat)
+	print block, filename(target_images[seed1]),filename(target_images[seed2]), filename(target_images[seed3]), filename(target_images[seed4]), filename(target_images[seed5]), filename(target_images[seed6]), filename(target_images[seed7]), filename(target_images[seed8]),
+	print present_choice_octuple(target_images, seed1, seed2, seed3, seed4, seed5, seed6, seed7, seed8)
 
 
