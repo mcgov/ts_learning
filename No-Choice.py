@@ -549,14 +549,14 @@ with open('display_this_stuff.csv', 'rb') as f:
 			int(row[9][23],16),
 			int(row[9][24],16)
 			]
-			print filename(target_images[int(row[1],16)]), 
-			filename(target_images[int(row[2],16)]), 
-			filename(target_images[int(row[3],16)]), 
-			filename(target_images[int(row[4],16)]), 
-			filename(target_images[int(row[5],16)]), 
-			filename(target_images[int(row[6],16)]), 
-			filename(target_images[int(row[7],16)]) , 
-			filename(target_images[int(row[8],16)])
+			print filename(target_images[int(row[1])]), 
+			filename(target_images[int(row[2])]), 
+			filename(target_images[int(row[3])]), 
+			filename(target_images[int(row[4])]), 
+			filename(target_images[int(row[5])]), 
+			filename(target_images[int(row[6])]), 
+			filename(target_images[int(row[7])]) , 
+			filename(target_images[int(row[8])])
 			print present_no_choice_octuple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), parsed_order)
 			### No choice octuple requires a 10-tuple, the array of all images to be used, the index of the images to be displayed (8), and a sequence of numbers that represents the order in which to display them, numbers 1-8
 

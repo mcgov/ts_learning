@@ -223,7 +223,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
 						if clicked[i] == 3:
 							clicked[i] = clicked[i]+1
-							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 			
 def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7):
@@ -232,7 +232,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 	img = [None] * 9
 	guys = [None, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7]
 	## set the image locations
-	## Images here are commandable sprites, so we can tell them what to do using Q below
+	## Images here are commandable sprites, they are displayed in a shuffled order on the screen, but are logged in this order.
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5, brightness=.5)
 	img[1] = CommandableImageSprite( screen, octuple_displayat[0], images[rightid], scale=QUAD_IMAGE_SCALE )
 	img[2] = CommandableImageSprite( screen, octuple_displayat[1] , images[wrong1], scale=QUAD_IMAGE_SCALE )
@@ -244,7 +244,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 	img[8] = CommandableImageSprite( screen, octuple_displayat[7], images[wrong7], scale=QUAD_IMAGE_SCALE )
 
 
-	outputString= "quad," + str(rightid) + "," + str(wrong1) + "," + str(wrong2) + "," + str(wrong3) +  "," + str(wrong4) + "," + str(wrong5) + "," + str(wrong6) + str(wrong7) +  ",("
+	outputString= "oct," + str(rightid) + "," + str(wrong1) + "," + str(wrong2) + "," + str(wrong3) +  "," + str(wrong4) + "," + str(wrong5) + "," + str(wrong6) + "," + str(wrong7) +  ",("
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
@@ -297,7 +297,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
 						if clicked[i] == 3:
 							clicked[i] = clicked[i]+1
-							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 			
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -414,49 +414,49 @@ quadruple_displayat= [ ((screen.get_width()/4) + 105, 400), ((screen.get_width()
 octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4) + OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  ((screen.get_width()/4)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET) , (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET) ]
 ##present a number of blocks
 
+def pickrandom(number):
+	numbers = []
+	picks = 0
+	while picks < number:
+		pick = randint(0,(len(target_images)-1))
+		if pick not in numbers:
+			print pick
+			numbers.append(pick)
+			picks = picks + 1
+	return numbers
 
-
+##########################################################################################################################################################3
 ## finally run the thing, also print the block number, the targetidx, and the index of the correct image. ##Note that this may display duplicates as is.
 ## the last item is the presen_trial function that actually runs the trial.
 
 
-targetidx = randint(0,(len(target_images)-1))
-print "CHOICE SINGLES:"
-print targetidx, filename(target_images[targetidx]), present_choice_single(target_images, targetidx)
 
-print "CHOICE DOUBLES:"
-for block in range(2):	
-	seed1 = randint(0,(len(target_images)-1))
-	seed2 = randint(0,(len(target_images)-1))
 
-	shuffle(double_displayat)
-	print block, filename(target_images[seed1]), filename(target_images[seed2])
-	print block, present_choice_double(target_images, seed1, seed2)
+# targetidx = randint(0,(len(target_images)-1))
+# # print "CHOICE SINGLES:"
+# print present_choice_single(target_images, targetidx)
 
-print "CHOICE QUADRUPLES:"
-for block in range(2):	
+# # print "CHOICE DOUBLES:"
+# for block in range(2):	
+# 	seeds = pickrandom(2)  ## this is that function above ^^ to pick some non-repeating random integers
+# 	shuffle(double_displayat)
+# 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
+# 	print present_choice_double(target_images, seeds[0], seeds[1] )
 
-  seed1 = randint(0,(len(target_images)-1))
-  seed2 = randint(0,(len(target_images)-1))
-  seed3 = randint(0,(len(target_images)-1))
-  seed4 = randint(0,(len(target_images)-1)) #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
-  shuffle(quadruple_displayat)
-  print block, filename(target_images[seed1]), filename(target_images[seed2]),filename(target_images[seed3]) ,filename(target_images[seed4]) 
-  print block, present_choice_quadruple(target_images, seed1, seed2, seed3, seed4)
+# # print "CHOICE QUADRUPLES:"
+# for block in range(2):	
+	
+# 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
+# 	seeds = pickrandom(4)
+# 	shuffle(quadruple_displayat)
+# 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
+# 	print present_choice_quadruple(target_images, seeds[0], seeds[1], seeds[2] ,seeds[3] )
 
-print "CHOICE OCTUPLES:"
+# print "CHOICE OCTUPLES:"
 for block in range (2):      ########################## problem right now is that this will give duplicate entries! laame. have to fix this tomorrow
-	seed1 = randint(0,(len(target_images)-1))
-	seed2 = randint(0,(len(target_images)-1))
-	seed3 = randint(0,(len(target_images)-1))
-	seed4 = randint(0,(len(target_images)-1))	
-	seed5 = randint(0,(len(target_images)-1))
-	seed6 = randint(0,(len(target_images)-1))
-	seed7 = randint(0,(len(target_images)-1))
-	seed8 = randint(0,(len(target_images)-1))
-
-	shuffle(quadruple_displayat)
-	print block, filename(target_images[seed1]),filename(target_images[seed2]), filename(target_images[seed3]), filename(target_images[seed4]), filename(target_images[seed5]), filename(target_images[seed6]), filename(target_images[seed7]), filename(target_images[seed8]),
-	print present_choice_octuple(target_images, seed1, seed2, seed3, seed4, seed5, seed6, seed7, seed8)
+	seeds = pickrandom(8)
+	shuffle (octuple_displayat)
+	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
+	print present_choice_octuple(target_images, seeds[0], seeds[1], seeds[2] ,seeds[3] ,seeds[4] ,seeds[5], seeds[6], seeds[7] )
 
 
