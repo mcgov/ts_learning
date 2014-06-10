@@ -432,28 +432,28 @@ def pickrandom(number):
 
 
 
-# targetidx = randint(0,(len(target_images)-1))
-# # print "CHOICE SINGLES:"
-# print present_choice_single(target_images, targetidx)
+targetidx = randint(0,(len(target_images)-1))
+# print "CHOICE SINGLES:"
+print present_choice_single(target_images, targetidx)
 
-# # print "CHOICE DOUBLES:"
-# for block in range(2):	
-# 	seeds = pickrandom(2)  ## this is that function above ^^ to pick some non-repeating random integers
-# 	shuffle(double_displayat)
-# 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
-# 	print present_choice_double(target_images, seeds[0], seeds[1] )
+# print "CHOICE DOUBLES:" ################
+for block in range(2):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
+	seeds = pickrandom(2)  ## this is that function above ^^ to pick some non-repeating random integers
+	shuffle(double_displayat)
+	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
+	print present_choice_double(target_images, seeds[0], seeds[1] )
 
-# # print "CHOICE QUADRUPLES:"
-# for block in range(2):	
+# print "CHOICE QUADRUPLES:" ################################33
+for block in range(2):	########## NOTE: You can adjust the amount of times this runs  by adjusting the integer in the parenthesis there <<< --------
 	
-# 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
-# 	seeds = pickrandom(4)
-# 	shuffle(quadruple_displayat)
-# 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
-# 	print present_choice_quadruple(target_images, seeds[0], seeds[1], seeds[2] ,seeds[3] )
+	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
+	seeds = pickrandom(4)
+	shuffle(quadruple_displayat)
+	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
+	print present_choice_quadruple(target_images, seeds[0], seeds[1], seeds[2] ,seeds[3] )
 
-# print "CHOICE OCTUPLES:"
-for block in range (2):      ########################## problem right now is that this will give duplicate entries! laame. have to fix this tomorrow
+# print "CHOICE OCTUPLES:"  ################################
+for block in range (2):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
 	seeds = pickrandom(8)
 	shuffle (octuple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
