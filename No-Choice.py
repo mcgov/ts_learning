@@ -523,32 +523,10 @@ with open('display_this_stuff.csv', 'rb') as f:
 			print filename(target_images[int(row[1])]), filename(target_images[int(row[2])]), filename(target_images[int(row[3])]), filename(target_images[int(row[4])]),
 			print present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
 		if row[0] == 'oct':
-			parsed_order = [
-			int(row[9][1],16),
-			int(row[9][2],16),
-			int(row[9][3],16),
-			int(row[9][4],16),
-			int(row[9][5],16),
-			int(row[9][6],16),
-			int(row[9][7],16),
-			int(row[9][8],16),
-			int(row[9][9],16),
-			int(row[9][10],16),
-			int(row[9][11],16),
-			int(row[9][12],16),
-			int(row[9][13],16),
-			int(row[9][14],16),
-			int(row[9][15],16),
-			int(row[9][16],16),
-			int(row[9][17],16),
-			int(row[9][18],16),
-			int(row[9][19],16),
-			int(row[9][20],16),
-			int(row[9][21],16),
-			int(row[9][22],16),
-			int(row[9][23],16),
-			int(row[9][24],16)
-			]
+			parsed_order = []
+			for i in range(1,24):
+				parsed_order.append( int(row[9][i], 16) )
+			
 			print filename(target_images[int(row[1])]), 
 			filename(target_images[int(row[2])]), 
 			filename(target_images[int(row[3])]), 
