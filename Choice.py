@@ -448,14 +448,14 @@ targetidx = randint(0,(len(target_images)-1))
 print present_choice_single(target_images, targetidx)
 
 # print "CHOICE DOUBLES:" ################
-for block in range(2):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
+for block in range(1):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	seeds = pickrandom(2)  ## this is that function above ^^ to pick some non-repeating random integers
 	shuffle(double_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
 	print present_choice_double(target_images, seeds[0], seeds[1] )
 
 # print "CHOICE QUADRUPLES:" ################################33
-for block in range(2):	########## NOTE: You can adjust the amount of times this runs  by adjusting the integer in the parenthesis there <<< --------
+for block in range(1):	########## NOTE: You can adjust the amount of times this runs  by adjusting the integer in the parenthesis there <<< --------
 	
 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
 	seeds = pickrandom(4)
@@ -465,7 +465,7 @@ for block in range(2):	########## NOTE: You can adjust the amount of times this 
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 
 # print "CHOICE OCTUPLES:"  ################################
-for block in range (2):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
+for block in range (1):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
 	seeds = pickrandom(8)
 	shuffle (octuple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),

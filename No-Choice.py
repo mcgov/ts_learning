@@ -213,10 +213,6 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	# A queue of animation operations
 	Q = DisplayQueue()
 	
-	# Draw a single animation in if you want!
-	
-	
-
 	# What order do we draw sprites and things in?
 	dos = OrderedUpdates(*img) # Draw and update in this order
 	
@@ -322,7 +318,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 	dos = OrderedUpdates(*img) # Draw and update in this order
 	
 	start_time = time()
-	#play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
+	
 	finished = False
 	clicked = [0] * 9
 	## The standard event loop in kelpy -- this loops infinitely to process interactions
@@ -339,7 +335,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 			# check if each of our images was clicked
 			whom = who_was_clicked( dos )
 			
-			if whom is img[0]:  ## which is the button btw
+			if whom is img[0] :  ## which is the button btw
 				print "BUTTON PRESS: " + str(time() - start_time) , 
 				totalclicks = totalclicks+1
 				if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8]>3:
