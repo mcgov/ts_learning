@@ -44,7 +44,7 @@ def present_no_choice_single(images, targetidx):
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5)
-	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=IMAGE_SCALE)
+	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=QUAD_IMAGE_SCALE)
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	
@@ -96,7 +96,7 @@ def present_no_choice_single(images, targetidx):
 					Q.append(obj=img[1], action="scale", amount=(1/1.5), duration=1.0)
 					if clicked[1] == 3:
 						clicked[1] = clicked[1]+1
-						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						finished = True
 
@@ -108,8 +108,8 @@ def present_no_choice_double(images, rightid, wrongid, order):
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5)
-	img[1] = CommandableImageSprite( screen, double_displayat[0], images[rightid], scale=IMAGE_SCALE)
-	img[2] = CommandableImageSprite( screen, double_displayat[1] , images[wrongid], scale=IMAGE_SCALE)
+	img[1] = CommandableImageSprite( screen, double_displayat[0], images[rightid], scale=QUAD_IMAGE_SCALE)
+	img[2] = CommandableImageSprite( screen, double_displayat[1] , images[wrongid], scale=QUAD_IMAGE_SCALE)
 	
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
@@ -174,7 +174,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 					Q.append(obj=img[index], action="scale", amount=(1/1.5), duration=1.0)
 					if clicked[index] == 3:
 						clicked[index] = clicked[index]+1
-						Q.append(obj=img[index], action='swapblink', position=(1000,400), image=target_images_gray[guys[index]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+						Q.append(obj=img[index], action='swapblink', position=(1000,400), image=target_images_gray[guys[index]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						if clicked[1] >3 and clicked[2]>3 :
 							finished = True

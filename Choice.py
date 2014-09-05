@@ -43,7 +43,7 @@ def present_choice_single(images, targetidx):
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5, brightness=.5)
-	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=IMAGE_SCALE)
+	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=QUAD_IMAGE_SCALE)
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	
@@ -65,7 +65,7 @@ def present_choice_single(images, targetidx):
 		
 		if timesclicked == 3:
 			timesclicked = timesclicked+1
-			Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+			Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 			Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 
 		
@@ -103,8 +103,8 @@ def present_choice_double(images, rightid, wrongid):
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5, brightness=.5)
-	img[1] = CommandableImageSprite( screen, double_displayat[0], images[rightid], scale=IMAGE_SCALE)
-	img[2] = CommandableImageSprite( screen, double_displayat[1] , images[wrongid], scale=IMAGE_SCALE)
+	img[1] = CommandableImageSprite( screen, double_displayat[0], images[rightid], scale=QUAD_IMAGE_SCALE)
+	img[2] = CommandableImageSprite( screen, double_displayat[1] , images[wrongid], scale=QUAD_IMAGE_SCALE)
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	
@@ -155,7 +155,7 @@ def present_choice_double(images, rightid, wrongid):
 						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
 						if clicked[i] == 3:
 							clicked[i] = clicked[i]+1
-							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=IMAGE_SCALE, brightness=1.0 )
+							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 #!# Change so that there's only one function!
 
@@ -442,33 +442,31 @@ def pickrandom(number):
 
 
 
-
+seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
-print present_choice_single(target_images, targetidx)
+print present_choice_single(target_images, seeds[0])
 
 # print "CHOICE DOUBLES:" ################
 for block in range(1):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
-	seeds = pickrandom(2)  ## this is that function above ^^ to pick some non-repeating random integers
+	 ## this is that function above ^^ to pick some non-repeating random integers
 	shuffle(double_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
-	print present_choice_double(target_images, seeds[0], seeds[1] )
+	print present_choice_double(target_images, seeds[1], seeds[2] )
 
 # print "CHOICE QUADRUPLES:" ################################33
 for block in range(1):	########## NOTE: You can adjust the amount of times this runs  by adjusting the integer in the parenthesis there <<< --------
 	
 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
-	seeds = pickrandom(4)
 	shuffle(quadruple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
-	print present_choice_quadruple(target_images, seeds[0], seeds[1], seeds[2] ,seeds[3] )
+	print present_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6] )
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 
 # print "CHOICE OCTUPLES:"  ################################
 for block in range (1):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
-	seeds = pickrandom(8)
 	shuffle (octuple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
-	print present_choice_octuple(target_images, seeds[0], seeds[1], seeds[2] ,seeds[3] ,seeds[4] ,seeds[5], seeds[6], seeds[7] )
+	print present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] )
 
 

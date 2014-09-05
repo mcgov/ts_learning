@@ -4,3 +4,5 @@
 #ubuntu one files
 
 *.pyc
+
+.gitignore
