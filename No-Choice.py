@@ -337,11 +337,10 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 			
 			if whom is img[0] :  ## which is the button btw
 				print "BUTTON PRESS: " + str(time() - start_time) , 
-				totalclicks = totalclicks+1
 				if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8]>3:
 					pass
 				else:
-					
+					totalclicks = totalclicks+1
 					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
 					print filename(target_images[guys[index]])
 					clicked[index] = clicked[index] + 1
@@ -477,62 +476,63 @@ quadruple_displayat= [ ((screen.get_width()/4) + 90, 400), ((screen.get_width()/
 octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4) + OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  ((screen.get_width()/4)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET) , (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET) ]
 ##present a number of blocks
 
-
-
-with open('display_this_stuff.csv', 'rb') as f:
-	## A csv.reader object is created with the file object f and named 'reader'. The delimiter parameter is actually optional.
-	## the reader will default to use the comma as a delimiter. There are more parameters that offer more control over how .csv files are opened.
-	## check out python's documentation of the csv class for more info on that.
-	reader =  csv.reader(f, delimiter=",")
-	
-	## then we can iterate through the reader without too much fuss. Just like running a for loop, we iterate through the reader object.
-	## it returns lists of all the things in each row. We can pick things from the list using the array notation [].
-	for row in reader:
-		print row  ## uncomment to check out how the reader parses .csv files. They are taken in as lists.
-		if row[0] == 'single':
-			print filename(target_images[int(row[1])]), present_no_choice_single(target_images, int(row[1]))
-		## so easy!
-		if row[0] == 'double':
-			parsed_order = [
-			int(row[3][1], 16),
-			int(row[3][2], 16),
-			int(row[3][3], 16),
-			int(row[3][4], 16),
-			int(row[3][5], 16),
-			int(row[3][6], 16) ]
-			print filename(target_images[int(row[1])]),filename(target_images[int(row[2])]), present_no_choice_double(target_images, int(row[1]), int(row[2]), parsed_order)
-		if row[0] == 'quad':
-			parsed_order = [
-			int(row[5][1], 16),
-			int(row[5][2], 16),
-			int(row[5][3], 16),
-			int(row[5][4], 16),
-			int(row[5][5], 16),
-			int(row[5][6], 16),
-			int(row[5][7], 16),
-			int(row[5][8], 16),
-			int(row[5][9], 16),
-			int(row[5][10], 16),
-			int(row[5][11], 16),
-			int(row[5][12], 16)
-			]
-			print filename(target_images[int(row[1])]), filename(target_images[int(row[2])]), filename(target_images[int(row[3])]), filename(target_images[int(row[4])]),
-			print present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
-		if row[0] == 'oct':
-			parsed_order = []
-			for i in range(1,24):
-				parsed_order.append( int(row[9][i], 16) )
-			
-			print filename(target_images[int(row[1])]), 
-			filename(target_images[int(row[2])]), 
-			filename(target_images[int(row[3])]), 
-			filename(target_images[int(row[4])]), 
-			filename(target_images[int(row[5])]), 
-			filename(target_images[int(row[6])]), 
-			filename(target_images[int(row[7])]) , 
-			filename(target_images[int(row[8])])
-			print present_no_choice_octuple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), parsed_order)
-			### No choice octuple requires a 10-tuple, the array of all images to be used, the index of the images to be displayed (8), and a sequence of numbers that represents the order in which to display them, numbers 1-8
+if len( sys.argv ) < 2:
+	sys.stderr.write("Error: No input filename specified\n")
+else:
+	with open(sys.argv[1], 'rb') as f:
+		## A csv.reader object is created with the file object f and named 'reader'. The delimiter parameter is actually optional.
+		## the reader will default to use the comma as a delimiter. There are more parameters that offer more control over how .csv files are opened.
+		## check out python's documentation of the csv class for more info on that.
+		reader =  csv.reader(f, delimiter=",")
+		
+		## then we can iterate through the reader without too much fuss. Just like running a for loop, we iterate through the reader object.
+		## it returns lists of all the things in each row. We can pick things from the list using the array notation [].
+		for row in reader:
+			print row  ## uncomment to check out how the reader parses .csv files. They are taken in as lists.
+			if row[0] == 'single':
+				print filename(target_images[int(row[1])]), present_no_choice_single(target_images, int(row[1]))
+			## so easy!
+			if row[0] == 'double':
+				parsed_order = [
+				int(row[3][1], 16),
+				int(row[3][2], 16),
+				int(row[3][3], 16),
+				int(row[3][4], 16),
+				int(row[3][5], 16),
+				int(row[3][6], 16) ]
+				print filename(target_images[int(row[1])]),filename(target_images[int(row[2])]), present_no_choice_double(target_images, int(row[1]), int(row[2]), parsed_order)
+			if row[0] == 'quad':
+				parsed_order = [
+				int(row[5][1], 16),
+				int(row[5][2], 16),
+				int(row[5][3], 16),
+				int(row[5][4], 16),
+				int(row[5][5], 16),
+				int(row[5][6], 16),
+				int(row[5][7], 16),
+				int(row[5][8], 16),
+				int(row[5][9], 16),
+				int(row[5][10], 16),
+				int(row[5][11], 16),
+				int(row[5][12], 16)
+				]
+				print filename(target_images[int(row[1])]), filename(target_images[int(row[2])]), filename(target_images[int(row[3])]), filename(target_images[int(row[4])]),
+				print present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
+			if row[0] == 'oct':
+				parsed_order = []
+				for i in range(1,24):
+					parsed_order.append( int(row[9][i], 16) )
+				
+				print filename(target_images[int(row[1])]), 
+				filename(target_images[int(row[2])]), 
+				filename(target_images[int(row[3])]), 
+				filename(target_images[int(row[4])]), 
+				filename(target_images[int(row[5])]), 
+				filename(target_images[int(row[6])]), 
+				filename(target_images[int(row[7])]) , 
+				filename(target_images[int(row[8])])
+				print present_no_choice_octuple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), parsed_order)
+				### No choice octuple requires a 10-tuple, the array of all images to be used, the index of the images to be displayed (8), and a sequence of numbers that represents the order in which to display them, numbers 1-8
 
 
 
