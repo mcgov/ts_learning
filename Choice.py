@@ -71,7 +71,7 @@ def present_choice_single(images, targetidx):
 		
 
 		# If the event is a click:
-		if is_click(event):
+		if is_click(event) not Q.commands:
 			
 				
 			# check if each of our images was clicked
@@ -129,7 +129,7 @@ def present_choice_double(images, rightid, wrongid):
 		
 
 		# If the event is a click:
-		if is_click(event):
+		if is_click(event) and not Q.commands:
 			if clicked[1] > 3 and clicked[2] >3:
 				return outputString +")"
 							# check if each of our images was clicked
@@ -197,7 +197,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 		
 
 		# If the event is a click:
-		if is_click(event):
+		if is_click(event) not Q.commands:
 			if clicked[1] >3 and clicked[2] > 3 and clicked [3] > 3 and clicked[4] > 3:
 				return outputString + ")"
 			# check if each of our images was clicked
@@ -277,7 +277,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 		
 
 		# If the event is a click:
-		if is_click(event):
+		if is_click(event) not Q.commands:
 			
 			#!# if all([x > 3 for x in clicked]):
 			if clicked[1] >3 and clicked[2] >3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8] > 3:

@@ -70,7 +70,7 @@ def present_no_choice_single(images, targetidx):
 		# 	pass
 
 		# If the event is a click:
-		if is_click(event):
+		if is_click(event) and not Q.commands:
 			if finished:
 				break
 			# check if each of our images was clicked
@@ -144,7 +144,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 		# 	pass # could make a limit if you wanted
 
 		# If the event is a click:
-		if is_click(event):   
+		if is_click(event) and not Q.commands: 
 			if finished: ## If this is the second click, move on to the next thing!
 				break
 			# check if each of our images was clicked
@@ -228,7 +228,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 		# 	pass # could make a limit if you wanted
 
 		# If the event is a click:
-		if is_click(event):   
+		if is_click(event) and not Q.commands: 
 			if finished: ## If this is the second click, move on to the next thing!
 				break
 			# check if each of our images was clicked
@@ -329,18 +329,31 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 		# 	pass # could make a limit if you wanted
 
 		# If the event is a click:
-		if is_click(event):   
+		if is_click(event) and not Q.commands:
 			if finished: ## If this is the second click, move on to the next thing!
 				break
 			# check if each of our images was clicked
 			whom = who_was_clicked( dos )
 			
+			donezo = [ clicked[1] >3 ,
+			 			clicked[2] > 3 ,
+			  			clicked[3] > 3 , 
+			  			clicked[4] > 3 ,
+			  			clicked[5] > 3 , 
+			  			clicked[6] > 3 , 
+			  			clicked[7] > 3 ,
+			  			clicked[8] > 3   ]
+
+
 			if whom is img[0] :  ## which is the button btw
 				print "BUTTON PRESS: " + str(time() - start_time) , 
-				if clicked[1] >3 and clicked[2]>3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8]>3:
+				if all(donezo):
 					pass
 				else:
+					#print "Before " + str( totalclicks)
 					totalclicks = totalclicks+1
+					#print "Before " + str( totalclicks) + "and " + str( order[totalclicks] )
+
 					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
 					print filename(target_images[guys[index]])
 					clicked[index] = clicked[index] + 1
@@ -520,7 +533,7 @@ else:
 				print present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
 			if row[0] == 'oct':
 				parsed_order = []
-				for i in range(1,24):
+				for i in range(1,25):
 					parsed_order.append( int(row[9][i], 16) )
 				
 				print filename(target_images[int(row[1])]), 
