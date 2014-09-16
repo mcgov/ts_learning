@@ -36,6 +36,50 @@ background_color = (140, 140, 140) # 90 # 190
 # Run a single trial
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 
+
+def display_wait_scene():
+	transparent_button = kstimulus("misc/transparent.png")
+	img = CommandableImageSprite( screen, (0,0), transparent_button, scale=1.0)
+	
+	## set the image locations
+	## Images here are commandable sprites, so we can tell them what to do using Q below
+	
+	
+	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
+	# Set up the updates, etc. 
+	
+	# A queue of animation operations
+	Q = DisplayQueue()
+	
+	# Draw a single animation in if you want!
+	
+
+	# What order do we draw sprites and things in?
+	dos = OrderedUpdates(img) # Draw and update in this order
+	
+	#play_sound(kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
+	## The standard event loop in kelpy -- this loops infinitely to process interactions
+	## and throws events depending on what the user does
+	finished = False
+	
+
+	for event in kelpy_standard_event_loop(screen, Q, dos):
+		
+		# if time()-start_time > MAX_DISPLAY_TIME:
+		# 	pass
+
+		# If the event is a click:
+		if is_click(event):
+			if finished:
+				break
+			# check if each of our images was clicked
+			whom = who_was_clicked(dos)
+					
+			if whom is img:  ## which isn't the button btw
+				
+				finished  = True
+				
+
 def present_choice_single(images, targetidx):
 	
 	img = [None] * 2
@@ -445,8 +489,10 @@ def pickrandom(number):
 seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
+print display_wait_scene()
 print present_choice_single(target_images, seeds[0])
 
+print display_wait_scene()
 # print "CHOICE DOUBLES:" ################
 for block in range(1):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	 ## this is that function above ^^ to pick some non-repeating random integers
@@ -454,6 +500,7 @@ for block in range(1):	  ########## NOTE: You can adjust the amount of times thi
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
 	print present_choice_double(target_images, seeds[1], seeds[2] )
 
+print display_wait_scene()
 # print "CHOICE QUADRUPLES:" ################################33
 for block in range(1):	########## NOTE: You can adjust the amount of times this runs  by adjusting the integer in the parenthesis there <<< --------
 	
@@ -463,6 +510,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	print present_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6] )
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 
+print display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 for block in range (1):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
 	shuffle (octuple_displayat)
