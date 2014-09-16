@@ -37,6 +37,25 @@ background_color = (140, 140, 140) # 90 # 190
 # Run a single trial
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 
+def display_wait_scene():
+	transparent_button = kstimulus("misc/transparent.png")
+	img = CommandableImageSprite( screen, (0,0), transparent_button, scale=1.0)
+	Q = DisplayQueue()
+	dos = OrderedUpdates(img) 
+	finished = False
+	
+
+	for event in kelpy_standard_event_loop(screen, Q, dos):
+		
+		
+		if is_click(event):
+			if finished:
+				break
+			whom = who_was_clicked(dos)		
+			if whom is img: 
+				finished  = True  #so we have to double click
+		
+
 def present_no_choice_single(images, targetidx):
 	
 	img = [None] * 2
@@ -501,8 +520,9 @@ else:
 		## then we can iterate through the reader without too much fuss. Just like running a for loop, we iterate through the reader object.
 		## it returns lists of all the things in each row. We can pick things from the list using the array notation [].
 		for row in reader:
-			print row  ## uncomment to check out how the reader parses .csv files. They are taken in as lists.
+			#print row  ## uncomment to check out how the reader parses .csv files. They are taken in as lists.
 			if row[0] == 'single':
+				print display_wait_scene()
 				print filename(target_images[int(row[1])]), present_no_choice_single(target_images, int(row[1]))
 			## so easy!
 			if row[0] == 'double':
@@ -513,6 +533,7 @@ else:
 				int(row[3][4], 16),
 				int(row[3][5], 16),
 				int(row[3][6], 16) ]
+				print display_wait_scene()
 				print filename(target_images[int(row[1])]),filename(target_images[int(row[2])]), present_no_choice_double(target_images, int(row[1]), int(row[2]), parsed_order)
 			if row[0] == 'quad':
 				parsed_order = [
@@ -529,6 +550,7 @@ else:
 				int(row[5][11], 16),
 				int(row[5][12], 16)
 				]
+				print display_wait_scene()
 				print filename(target_images[int(row[1])]), filename(target_images[int(row[2])]), filename(target_images[int(row[3])]), filename(target_images[int(row[4])]),
 				print present_no_choice_quadruple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), parsed_order)
 			def generate_oct_order():
@@ -545,6 +567,7 @@ else:
 				filename(target_images[int(row[6])]), 
 				filename(target_images[int(row[7])]) , 
 				filename(target_images[int(row[8])])
+				print display_wait_scene()
 				print present_no_choice_octuple(target_images, int(row[1]), int(row[2]), int(row[3]), int(row[4]), int(row[5]), int(row[6]), int(row[7]), int(row[8]), parsed_order)
 				### No choice octuple requires a 10-tuple, the array of all images to be used, the index of the images to be displayed (8), and a sequence of numbers that represents the order in which to display them, numbers 1-8
 
