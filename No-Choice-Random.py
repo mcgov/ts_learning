@@ -38,7 +38,7 @@ background_color = (140, 140, 140) # 90 # 190
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	
 
 def display_wait_scene():
-	transparent_button = kstimulus("misc/transparent.png")
+	transparent_button = os.path.dirname( __file__ )+"stimuli/transparent.png"
 	img = CommandableImageSprite( screen, (0,0), transparent_button, scale=1.0)
 	
 	## set the image locations
