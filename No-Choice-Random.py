@@ -17,7 +17,7 @@ from kelpy.Miscellaneous import *
 from kelpy.DisplayQueue import *
 from kelpy.OrderedUpdates import *
 from kelpy.EventHandler import *
-
+from scenes import display_naming_scene
 
 IMAGE_SCALE = 0.15
 QUAD_IMAGE_SCALE = .1
@@ -35,62 +35,6 @@ background_color = (140, 140, 140) # 90 # 190
 CLICKED_TIMES = 6
 
 
-def display_naming_scene( images, seeds ):
-	transparent_button = os.path.dirname( __file__ )+"stimuli/transparent.png"
-	img = [None] * 16
-
-
-	img[0] = CommandableImageSprite( screen, (0,0), transparent_button, scale=1.0)
-	img[1] = CommandableImageSprite( screen, sixteen_displayat[0], images[0], scale=QUAD_IMAGE_SCALE )
-	img[2] = CommandableImageSprite( screen, sixteen_displayat[1] , images[1], scale=QUAD_IMAGE_SCALE )
-	img[3] = CommandableImageSprite( screen, sixteen_displayat[2], images[2], scale=QUAD_IMAGE_SCALE )
-	img[4] = CommandableImageSprite( screen, sixteen_displayat[3], images[3], scale=QUAD_IMAGE_SCALE )
-	img[5] = CommandableImageSprite( screen, sixteen_displayat[4], images[4], scale=QUAD_IMAGE_SCALE )
-	img[6] = CommandableImageSprite( screen, sixteen_displayat[5] , images[5], scale=QUAD_IMAGE_SCALE )
-	img[7] = CommandableImageSprite( screen, sixteen_displayat[6], images[6], scale=QUAD_IMAGE_SCALE )
-	img[8] = CommandableImageSprite( screen, sixteen_displayat[7], images[7], scale=QUAD_IMAGE_SCALE )
-	img[9] = CommandableImageSprite( screen, sixteen_displayat[8], images[8], scale=QUAD_IMAGE_SCALE )
-	img[10] = CommandableImageSprite( screen, sixteen_displayat[9] , images[9], scale=QUAD_IMAGE_SCALE )
-	img[11] = CommandableImageSprite( screen, sixteen_displayat[10], images[10], scale=QUAD_IMAGE_SCALE )
-	img[12] = CommandableImageSprite( screen, sixteen_displayat[11], images[11], scale=QUAD_IMAGE_SCALE )
-	img[13] = CommandableImageSprite( screen, sixteen_displayat[12], images[12], scale=QUAD_IMAGE_SCALE )
-	img[14] = CommandableImageSprite( screen, sixteen_displayat[13] , images[13], scale=QUAD_IMAGE_SCALE )
-	img[15] = CommandableImageSprite( screen, sixteen_displayat[14], images[14], scale=QUAD_IMAGE_SCALE )
-	
-	Q = DisplayQueue()
-	
-
-	dos = OrderedUpdates(img)
-	
-	finished = False
-	clicked = 0
-	raynj = None
-	pickthisone = None
-	if isinstance( seeds, int ):
-		raynj = seeds
-		pickthisone = raynj
-	elif isinstance( seeds , list):
-		raynj = len(seeds)
-		pickthisone = seeds[randint(0, raynj )]
-	else:
-		return "We experienced a problem!"
-	Q.append(obj='sound', file= find_audio[pickthisone])
-	for event in kelpy_standard_event_loop(screen, Q, dos):
-		
-		# if time()-start_time > MAX_DISPLAY_TIME:
-		# 	pass
-
-		# If the event is a click:
-		if is_click(event):
-			if finished:
-				break
-			# check if each of our images was clicked
-			whom = who_was_clicked(dos)
-					
-			if whom is img[0]:  ## which is our hidden button
-				clicked+=1
-				if clicked >1:
-					finished  = True
 
 
 
@@ -639,7 +583,6 @@ button_image = kstimulus("shapes/circle_purple.png")
 double_displayat = [ (screen.get_width()/4, 400), ((screen.get_width()/4)*3, 400) ] 
 quadruple_displayat= [ ((screen.get_width()/4) + 90, 400), ((screen.get_width()/4)-100, 400),  (((screen.get_width()/4)*3)+100, 400) , (((screen.get_width()/4)*3)-90, 400) ]
 octuple_displayat =[ ((screen.get_width()/4) + OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4) + OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  ((screen.get_width()/4)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), ((screen.get_width()/4)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET),  (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET) , (((screen.get_width()/4)*3)+OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400-OCTUPLE_OFFSET), (((screen.get_width()/4)*3)-OCTUPLE_OFFSET, 400+OCTUPLE_OFFSET) ]
-
 sixteen_displayat =[ 
 	( ((screen.get_width()/6)*1, ((screen.get_height()/4)*1))) ,
 	( ((screen.get_width()/6)*2, ((screen.get_height()/4)*1) )),
@@ -656,6 +599,7 @@ sixteen_displayat =[
 	( ((screen.get_width()/6)*3, ((screen.get_height()/4)*3) )),
 	( ((screen.get_width()/6)*4, ((screen.get_height()/4)*3) )) ,
 	( ((screen.get_width()/6)*5, ((screen.get_height()/4)*3) )) ]
+
 
 
 ##present a number of blocks
@@ -679,7 +623,7 @@ targetidx = randint(0,(len(target_images)-1))
 print display_wait_scene()
 print present_no_choice_single(target_images, seeds[0])
 print display_wait_scene()
-print display_naming_scene(target_images, seeds[0] )
+print display_naming_scene(screen, target_images, seeds[0], sixteen_displayat , QUAD_IMAGE_SCALE)
 # print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
 	numbers = []
@@ -704,7 +648,7 @@ for block in range(1):	  ########## NOTE: You can adjust the amount of times thi
 	print present_no_choice_double(target_images, seeds[1], seeds[2], order )
 
 print display_wait_scene()
-print display_naming_scene(target_images, seeds[1:3] )
+print display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE)
 print display_wait_scene()
 
 
@@ -724,7 +668,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	print present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order )
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 print display_wait_scene()
-print display_naming_scene(target_images, seeds[3:7] )
+print display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE)
 print display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 
@@ -750,7 +694,7 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 	print present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order )
 
 print display_wait_scene()
-print display_naming_scene(target_images, seeds[7:15] )
+print display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
 print display_wait_scene()
 
 
