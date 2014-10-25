@@ -26,6 +26,7 @@ HOFFSET = 100
 VOFFSET = 100
 MAX_DISPLAY_TIME = 3.0
 GROW_RATIO = 1.2
+CLICK_LIMIT = 6
 ##############################################
 ## Set up pygame
 
@@ -89,7 +90,7 @@ def present_choice_single(images, targetidx):
 	## set the image locations
 	## Images here are commandable sprites, so we can tell them what to do using Q below
 	img[0] = CommandableImageSprite( screen, spot.center, button_image, scale=.5, brightness=.5)
-	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=QUAD_IMAGE_SCALE)
+	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx[0]], scale=QUAD_IMAGE_SCALE)
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	
@@ -109,9 +110,9 @@ def present_choice_single(images, targetidx):
 	
 	for event in kelpy_standard_event_loop(screen, Q, dos):
 		
-		if timesclicked == 3:
+		if timesclicked == CLICK_LIMIT:
 			timesclicked = timesclicked+1
-			Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
+			Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx[0]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 			Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 
 		
@@ -125,16 +126,22 @@ def present_choice_single(images, targetidx):
 			
 
 			if whom is img[1]:  ## which is the button btw
-				if timesclicked > 3:
-					return "single,"+ str(targetidx)
+				if timesclicked > CLICK_LIMIT:
+					return "single,"+ str(targetidx[0])
 				else:
 					timesclicked = timesclicked + 1
 					if timesclicked == 1:
-						Q.append(obj='sound', file=target_audio[targetidx]) 
+						Q.append(obj='sound', file=target_audio[targetidx[0]]) 
 					elif timesclicked == 2:
-						Q.append(obj='sound', file=target_audio2[targetidx])
+						Q.append(obj='sound', file=target_audio2[targetidx[0]])
 					elif timesclicked == 3:
-						Q.append(obj='sound', file=target_audio3[targetidx])
+						Q.append(obj='sound', file=target_audio3[targetidx[0]])
+					elif timesclicked == 4:
+						Q.append(obj='sound', file=target_audio[targetidx[0]]) 
+					elif timesclicked == 5:
+						Q.append(obj='sound', file=target_audio2[targetidx[0]])
+					elif timesclicked == 6:
+						Q.append(obj='sound', file=target_audio3[targetidx[0]])
 					else:
 						pass
 					
@@ -176,13 +183,13 @@ def present_choice_double(images, rightid, wrongid):
 
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
-			if clicked[1] > 3 and clicked[2] >3:
+			if clicked[1] > CLICK_LIMIT and clicked[2] > CLICK_LIMIT:
 				return outputString +")"
 							# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			for i in range(1,3):
 				if whom is img[i]:  ## which is the button btw
-					if clicked[i] > 3:
+					if clicked[i] > CLICK_LIMIT:
 						pass
 					else:
 						outputString = outputString+ str(format(guys[i], 'x'))
@@ -193,13 +200,19 @@ def present_choice_double(images, rightid, wrongid):
 							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
 						elif clicked[i] == 3:
 							Q.append(obj='sound', file=(target_audio3[guys[i]]) )
+						elif clicked[i] == 4:
+							Q.append(obj='sound', file=target_audio[guys[i]] ) 
+						elif clicked[i] == 5:
+							Q.append(obj='sound', file=target_audio2[guys[i]] )
+						elif clicked[i] == 6:
+							Q.append(obj='sound', file=target_audio3[guys[i]] )
 						else:
 							pass
 						
 						
 						Q.append(obj=img[i], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
 						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
-						if clicked[i] == 3:
+						if clicked[i] == CLICK_LIMIT:
 							clicked[i] = clicked[i]+1
 							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
@@ -244,14 +257,14 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
-			if clicked[1] >3 and clicked[2] > 3 and clicked [3] > 3 and clicked[4] > 3:
+			if clicked[1] > CLICK_LIMIT and clicked[2] > CLICK_LIMIT and clicked [3] > CLICK_LIMIT and clicked[4] > CLICK_LIMIT:
 				return outputString + ")"
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
 			for i in range(1,5):
 				if whom is img[i]:  ## which is the button btw
-					if clicked[i] > 3:
+					if clicked[i] > CLICK_LIMIT:
 						pass
 					else:
 						outputString = outputString+ str(format(guys[i], 'x'))
@@ -262,13 +275,19 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
 						elif clicked[i] == 3:
 							Q.append(obj='sound', file=(target_audio3[guys[i]]) )
+						elif clicked[i] == 4:
+							Q.append(obj='sound', file=target_audio[guys[i]] ) 
+						elif clicked[i] == 5:
+							Q.append(obj='sound', file=target_audio2[guys[i]] )
+						elif clicked[i] == 6:
+							Q.append(obj='sound', file=target_audio3[guys[i]] )
 						else:
 							pass
 						
 						
 						Q.append(obj=img[i], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
 						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
-						if clicked[i] == 3:
+						if clicked[i] == CLICK_LIMIT:
 							clicked[i] = clicked[i]+1
 							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
@@ -326,14 +345,14 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 		if is_click(event) and not Q.commands:
 			
 			#!# if all([x > 3 for x in clicked]):
-			if clicked[1] >3 and clicked[2] >3 and clicked[3] > 3 and clicked[4] > 3 and clicked[5] > 3 and clicked[6] > 3 and clicked[7] > 3 and clicked[8] > 3:
+			if clicked[1] >CLICK_LIMIT and clicked[2] > CLICK_LIMIT and clicked[3] > CLICK_LIMIT and clicked[4] > CLICK_LIMIT and clicked[5] > CLICK_LIMIT and clicked[6] > CLICK_LIMIT and clicked[7] > CLICK_LIMIT and clicked[8] > CLICK_LIMIT:
 				return outputString + ")"
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
 			for i in range(1,9):
 				if whom is img[i]:  ## which is the button btw
-					if clicked[i] > 3:
+					if clicked[i] > CLICK_LIMIT:
 						pass
 					else:
 						outputString = outputString+ str(format(guys[i], 'x'))
@@ -344,13 +363,19 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 							Q.append(obj='sound', file=(target_audio2[guys[i]]) )
 						elif clicked[i] == 3:
 							Q.append(obj='sound', file=(target_audio3[guys[i]]) )
+						elif clicked[i] == 4:
+							Q.append(obj='sound', file=target_audio[guys[i]] ) 
+						elif clicked[i] == 5:
+							Q.append(obj='sound', file=target_audio2[guys[i]] )
+						elif clicked[i] == 6:
+							Q.append(obj='sound', file=target_audio3[guys[i]] )
 						else:
 							pass
 						
 						
 						Q.append(obj=img[i], action="scale", amount=1.5, duration=1.0)  ##append simultaneous doesn't work : (
 						Q.append(obj=img[i], action="scale", amount=(1/1.5), duration=1.0)
-						if clicked[i] == 3:
+						if clicked[i] == CLICK_LIMIT:
 							clicked[i] = clicked[i]+1
 							Q.append(obj=img[i], action='swapblink', position=(1000,400), image=target_images_gray[guys[i]], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 							Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
@@ -511,16 +536,12 @@ targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
 
 print display_wait_scene()
-print present_choice_single(target_images, seeds[0])
-
+print present_choice_single(target_images, [ seeds[0] ])
+print display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE )
 print display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
-print display_wait_scene()
-
 
 # print "CHOICE DOUBLES:" ################
-for block in range(1):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
-	 ## this is that function above ^^ to pick some non-repeating random integers
+for block in range(1):	  ########## NOTE: adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	shuffle(double_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
 	print present_choice_double(target_images, seeds[1], seeds[2] )
@@ -529,7 +550,7 @@ print display_wait_scene()
 print display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
 
 print display_wait_scene()
-# print "CHOICE QUADRUPLES:" ################################33
+# print "CHOICE QUADRUPLES:" ############################
 for block in range(1):	########## NOTE: You can adjust the amount of times this runs  by adjusting the integer in the parenthesis there <<< --------
 	
 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
@@ -539,7 +560,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 print display_wait_scene()
 
-print display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
+print display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE )
 
 print display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
@@ -549,6 +570,6 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 	print present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] )
 
 print display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
+print display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
 print display_wait_scene()
 

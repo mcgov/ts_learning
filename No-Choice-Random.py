@@ -28,7 +28,7 @@ MAX_DISPLAY_TIME = 3.0
 ##############################################
 ## Set up pygame
 
-screen, spot = initialize_kelpy(fullscreen=True)
+screen, spot = initialize_kelpy(fullscreen=False)
 
 OFF_LEFT = spot.west
 background_color = (140, 140, 140) # 90 # 190
@@ -555,25 +555,7 @@ audio3+"Hello_vaylo.wav",
 audio3+"Hello_zefay.wav"
   ]
 
-faudio = os.path.dirname( __file__ )+"stimuli/audio/find/"  ##This returns the filepath relative to this file. We're loading a bunch of things from the stimuli folder.
 
-find_audio =[
-faudio+"find_beppo.wav",
-faudio+"find_deela.wav",
-faudio+"find_finna.wav",
-faudio+"find_guffi.wav",
-faudio+"find_higoo.wav",
-faudio+"find_kogay.wav",
-faudio+"find_lahdo.wav",
-faudio+"find_mobi.wav",
-faudio+"find_nadoo.wav",
-faudio+"find_pavy.wav",
-faudio+"find_roozy.wav",
-faudio+"find_soma.wav",
-faudio+"find_tibble.wav",
-faudio+"find_vaylo.wav",
-faudio+"find_zefay.wav"
-]
 
 SIXTEEN_OFFSET = 75
 
@@ -589,12 +571,12 @@ sixteen_displayat =[
 	( ((screen.get_width()/6)*3, ((screen.get_height()/4)*1) )),
 	( ((screen.get_width()/6)*4, ((screen.get_height()/4)*1))) ,
 	( ((screen.get_width()/6)*5, ((screen.get_height()/4)*1))) ,
-( ((screen.get_width()/6)*1, ((screen.get_height()/4)*2))) ,
+	( ((screen.get_width()/6)*1, ((screen.get_height()/4)*2))) ,
 	( ((screen.get_width()/6)*2, ((screen.get_height()/4)*2) )),
 	( ((screen.get_width()/6)*3, ((screen.get_height()/4)*2) )),
 	( ((screen.get_width()/6)*4, ((screen.get_height()/4)*2) )),
 	( ((screen.get_width()/6)*5, ((screen.get_height()/4)*2) )) ,
-( ((screen.get_width()/6)*1, ((screen.get_height()/4)*3) )) ,
+	( ((screen.get_width()/6)*1, ((screen.get_height()/4)*3) )) ,
 	( ((screen.get_width()/6)*2, ((screen.get_height()/4)*3) )),
 	( ((screen.get_width()/6)*3, ((screen.get_height()/4)*3) )),
 	( ((screen.get_width()/6)*4, ((screen.get_height()/4)*3) )) ,
@@ -623,7 +605,7 @@ targetidx = randint(0,(len(target_images)-1))
 print display_wait_scene()
 print present_no_choice_single(target_images, seeds[0])
 print display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[0], sixteen_displayat , QUAD_IMAGE_SCALE)
+print display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
 # print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
 	numbers = []

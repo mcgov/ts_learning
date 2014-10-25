@@ -10,9 +10,8 @@ from kelpy.EventHandler import *
 
 def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	
-	
-
-	faudio = os.path.dirname( __file__ )+"stimuli/audio/find/"  ##This returns the filepath relative to this file. We're loading a bunch of things from the stimuli folder.
+	shuffle( sixteen_displayat )
+	faudio = os.path.dirname( __file__ )+"/stimuli/audio/find/"  ##This returns the filepath relative to this file. We're loading a bunch of things from the stimuli folder.
 
 	find_audio =[
 	faudio+"find_beppo.wav",
@@ -62,30 +61,29 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	clicked = 0
 	raynj = None
 	pickthisone = None
-	if isinstance( seeds, int ):
-		raynj = seeds
-		pickthisone = raynj
-	elif isinstance( seeds , list):
-		raynj = len(seeds)-1
-		pickthisone = seeds[randint(0, raynj )]
-	else:
-		return "We experienced a problem!"
+	pickthisone = seeds[0]
+	
 	Q.append(obj='sound', file= find_audio[pickthisone])
+	#print pickthisone, seeds[0] , clicked
+	#print 
 	for event in kelpy_standard_event_loop(screen, Q, dos):
 		
-		# if time()-start_time > MAX_DISPLAY_TIME:
-		# 	pass
-
-		# If the event is a click:
 		if is_click(event):
 			if finished:
 				break
-			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
-			if whom is img[0]:  ## which is our hidden button
-				clicked+=1
-				if clicked >1:
-					finished  = True
+			
+			if whom is img[seeds[clicked]+1]:
+				clicked += 1
+				#print len(seeds)-1, clicked
+				if  clicked > len( seeds )-1 :
+					finished = True
+					break
+				else:
+					Q.append(obj='sound', file= find_audio[ seeds[clicked] ] )
+					pickthisone = clicked
+
+
 
 
