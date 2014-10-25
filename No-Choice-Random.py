@@ -28,7 +28,7 @@ MAX_DISPLAY_TIME = 3.0
 ##############################################
 ## Set up pygame
 
-screen, spot = initialize_kelpy(fullscreen=False)
+screen, spot = initialize_kelpy(fullscreen=True)
 
 OFF_LEFT = spot.west
 background_color = (140, 140, 140) # 90 # 190
@@ -602,10 +602,10 @@ seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
 
-print display_wait_scene()
+display_wait_scene()
 print present_no_choice_single(target_images, seeds[0])
-print display_wait_scene()
-print display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
+display_wait_scene()
+display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
 # print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
 	numbers = []
@@ -617,7 +617,7 @@ def pickrandom(number):
 			numbers.append(pick)
 			picks = picks + 1
 	return numbers
-print display_wait_scene()
+display_wait_scene()
 for block in range(1):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	 ## this is that function above ^^ to pick some non-repeating random integers
 	shuffle(double_displayat)
@@ -629,9 +629,9 @@ for block in range(1):	  ########## NOTE: You can adjust the amount of times thi
 		shuffle( order )
 	print present_no_choice_double(target_images, seeds[1], seeds[2], order )
 
-print display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE)
-print display_wait_scene()
+display_wait_scene()
+display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE)
+display_wait_scene()
 
 
 # print "CHOICE QUADRUPLES:" ################################33
@@ -649,15 +649,15 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
 	print present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order )
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
-print display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE)
-print display_wait_scene()
+display_wait_scene()
+display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE)
+display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 
 
 
 
-print display_wait_scene()
+display_wait_scene()
 for block in range (1):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
 	
 	shuffle (octuple_displayat)
@@ -675,9 +675,9 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
 	print present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order )
 
-print display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
-print display_wait_scene()
+display_wait_scene()
+display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
+display_wait_scene()
 
 
 
