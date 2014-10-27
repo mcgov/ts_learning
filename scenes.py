@@ -56,7 +56,7 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	
 
 	dos = OrderedUpdates(img)
-	
+	double_click=0
 	finished = False
 	clicked = 0
 	raynj = None
@@ -73,8 +73,13 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 				break
 			whom = who_was_clicked(dos)
 					
+			if whom is img[0]:
+				double_click += 1
+				if double_click > 1:
+					finished = True
+					break;
 			
-			if whom is img[seeds[clicked]+1]:
+			if whom is not img[0] and whom is not None:
 				clicked += 1
 				#print len(seeds)-1, clicked
 				if  clicked > len( seeds )-1 :
