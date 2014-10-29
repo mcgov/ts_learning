@@ -534,7 +534,7 @@ def pickrandom(number):
 seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
-"""
+
 display_wait_scene()
 print present_choice_single(target_images, [ seeds[0] ])
 display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE )
@@ -573,7 +573,7 @@ display_wait_scene()
 display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
-"""
+
 
 seeds = pickrandom(15) ##reshuffle those images.
 display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE)
