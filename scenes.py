@@ -68,7 +68,7 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	#print 
 	for event in kelpy_standard_event_loop(screen, Q, dos):
 		
-		if is_click(event):
+		if is_click(event) and not Q.commands:
 			if finished:
 				break
 			whom = who_was_clicked(dos)
@@ -86,7 +86,7 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 					finished = True
 					break
 				else:
-					Q.append(obj='sound', file= find_audio[ seeds[clicked] ] )
+					Q.append(obj='sound', file= find_audio[ seeds[clicked] ], wait=True )
 					pickthisone = clicked
 
 

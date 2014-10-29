@@ -679,6 +679,9 @@ display_wait_scene()
 display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
+seeds = pickrandom(15) ##reshuffle the order of stims.
+display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE)
+display_wait_scene()
 
 
 
