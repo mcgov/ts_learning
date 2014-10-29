@@ -30,7 +30,7 @@ CLICK_LIMIT = 6
 ##############################################
 ## Set up pygame
 
-screen, spot = initialize_kelpy(fullscreen=False)
+screen, spot = initialize_kelpy(fullscreen=True)
 
 OFF_LEFT = spot.west
 background_color = (140, 140, 140) # 90 # 190
