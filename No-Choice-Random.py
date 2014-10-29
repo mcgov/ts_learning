@@ -583,6 +583,7 @@ sixteen_displayat =[
 	( ((screen.get_width()/6)*5, ((screen.get_height()/4)*3) )) ]
 
 
+timer = time()
 
 ##present a number of blocks
 
@@ -605,7 +606,7 @@ targetidx = randint(0,(len(target_images)-1))
 display_wait_scene()
 print present_no_choice_single(target_images, seeds[0])
 display_wait_scene()
-display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
+display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE, timer)
 # print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
 	numbers = []
@@ -630,7 +631,7 @@ for block in range(1):	  ########## NOTE: You can adjust the amount of times thi
 	print present_no_choice_double(target_images, seeds[1], seeds[2], order )
 
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE)
+display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE, timer)
 display_wait_scene()
 
 
@@ -650,7 +651,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	print present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order )
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE)
+display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE, timer)
 display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 
@@ -676,11 +677,11 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 	print present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order )
 
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
+display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE , timer)
 display_wait_scene()
 
 seeds = pickrandom(15) ##reshuffle the order of stims.
-display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE)
+display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE , timer)
 display_wait_scene()
 
 

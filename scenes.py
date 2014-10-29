@@ -1,6 +1,7 @@
 import os, sys
 import pygame
 from random import randint, choice, sample, shuffle
+from time import time
 from kelpy.CommandableImageSprite import *
 from kelpy.Miscellaneous import *
 from kelpy.DisplayQueue import *
@@ -8,7 +9,7 @@ from kelpy.OrderedUpdates import *
 from kelpy.EventHandler import *
 
 
-def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
+def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE, timer):
 	
 	shuffle( sixteen_displayat )
 	faudio = os.path.dirname( __file__ )+"/stimuli/audio/find/"  ##This returns the filepath relative to this file. We're loading a bunch of things from the stimuli folder.
@@ -80,6 +81,9 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 					break;
 			
 			if whom is not img[0] and whom is not None:
+				for i in range (0 , len(img)):
+					if whom is img[i]:
+						print "{NS: " + str( seeds[clicked] ) + ',' + str( i ) + " , " + str(time() - timer ) + "}"
 				clicked += 1
 				#print len(seeds)-1, clicked
 				if  clicked > len( seeds )-1 :
