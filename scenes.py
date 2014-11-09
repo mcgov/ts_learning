@@ -9,7 +9,7 @@ from kelpy.OrderedUpdates import *
 from kelpy.EventHandler import *
 
 
-def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE, timer):
+def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	
 	shuffle( sixteen_displayat )
 	faudio = os.path.dirname( __file__ )+"/stimuli/audio/find/"  ##This returns the filepath relative to this file. We're loading a bunch of things from the stimuli folder.
@@ -65,6 +65,7 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE, time
 	pickthisone = seeds[0]
 	
 	Q.append(obj='sound', file= find_audio[pickthisone])
+	timer = time()
 	#print pickthisone, seeds[0] , clicked
 	#print 
 	for event in kelpy_standard_event_loop(screen, Q, dos):
@@ -83,7 +84,7 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE, time
 			if whom is not img[0] and whom is not None:
 				for i in range (0 , len(img)):
 					if whom is img[i]:
-						print "{NS: " + str( seeds[clicked] ) + ',' + str( i ) + " , " + str(time() - timer ) + "}"
+						print "{NS: " + str( seeds[clicked] ) + ',' + str( i-1 ) + "," + str(time() - timer ) + "}"
 				clicked += 1
 				#print len(seeds)-1, clicked
 				if  clicked > len( seeds )-1 :
@@ -91,6 +92,8 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE, time
 					break
 				else:
 					Q.append(obj='sound', file= find_audio[ seeds[clicked] ], wait=True )
+					timer = time()
+
 					pickthisone = clicked
 
 

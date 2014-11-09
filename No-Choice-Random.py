@@ -98,7 +98,7 @@ def present_no_choice_single(images, targetidx):
 	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=QUAD_IMAGE_SCALE)
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
-	
+	print filename(images[targetidx]), str( spot.center )
 	# A queue of animation operations
 	Q = DisplayQueue()
 	
@@ -115,6 +115,7 @@ def present_no_choice_single(images, targetidx):
 	finished = False
 	clicked = [0] * 2
 
+	##print "(Single," + 
 	for event in kelpy_standard_event_loop(screen, Q, dos):
 		
 		# if time()-start_time > MAX_DISPLAY_TIME:
@@ -169,10 +170,11 @@ def present_no_choice_double(images, rightid, wrongid, order):
 	img[1] = CommandableImageSprite( screen, double_displayat[0], images[rightid], scale=QUAD_IMAGE_SCALE)
 	img[2] = CommandableImageSprite( screen, double_displayat[1] , images[wrongid], scale=QUAD_IMAGE_SCALE)
 	
+	
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	def guytonumber(person):  ##should probably be a switch
-			print person
+			#print person
 			if person == rightid:
 				return 1
 			elif person == wrongid:
@@ -185,8 +187,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 	
 	# Draw a single animation in if you want!
 	
-	
-
+	print filename(target_images[rightid]), str ( double_displayat[0] ) , filename(target_images[wrongid]) , str ( double_displayat[1] ) , "{" ,
 	# What order do we draw sprites and things in?
 	dos = OrderedUpdates(*img) # Draw and update in this order
 	
@@ -209,14 +210,14 @@ def present_no_choice_double(images, rightid, wrongid, order):
 			whom = who_was_clicked( dos )
 			
 			if whom is img[0]:  ## which is the button btw
-				print "BUTTON PRESS: " + str(time() - start_time) , 
+				#print "BUTTON PRESS: " + str(time() - start_time) , 
 				totalclicks = totalclicks+1
 				if clicked[1] >CLICKED_TIMES and clicked[2]>CLICKED_TIMES :
 					pass
 				else:
 					
 					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
-					print filename(target_images[guys[index]])
+					print str( order[totalclicks] ) +  "," ,
 					clicked[index] = clicked[index] + 1
 					if clicked[index] == 1:
 						Q.append(obj='sound', file=(target_audio1[guys[index]]) )
@@ -242,6 +243,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						if clicked[1] >CLICKED_TIMES and clicked[2]>CLICKED_TIMES :
 							finished = True
+							print "}"
 
 def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	
@@ -257,8 +259,12 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	img[3] = CommandableImageSprite( screen, quadruple_displayat[2], images[wrong2], scale=QUAD_IMAGE_SCALE )
 	img[4] = CommandableImageSprite( screen, quadruple_displayat[3], images[wrong3], scale=QUAD_IMAGE_SCALE )
 
+	print filename(target_images[rightid]), str ( quadruple_displayat[0] ) , filename(target_images[wrong1]) , str ( quadruple_displayat[1] ) , filename(target_images[wrong2]) , str ( quadruple_displayat[2] ) ,  filename(target_images[wrong3]) , str ( quadruple_displayat[3] ) ,"{" ,
+
+
+
 	def guytonumber(person):  ##should probably be a switch
-			print person
+			##print person
 			if person == rightid:
 				return 1
 			elif person == wrong1:
@@ -299,15 +305,16 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 			whom = who_was_clicked( dos )
 			
 			if whom is img[0]:  ## which is the button btw
-				print "BUTTON PRESS: " + str(time() - start_time) , 
+				#print "BUTTON PRESS: " + str(time() - start_time) , 
 				totalclicks = totalclicks+1
 				if clicked[1] >CLICKED_TIMES and clicked[2]>CLICKED_TIMES and clicked[3] > CLICKED_TIMES and clicked[4] > CLICKED_TIMES:
 					pass
 				else:
 					
 					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
-					print filename(target_images[guys[index]])
+					#print filename(target_images[guys[index]])
 					clicked[index] = clicked[index] + 1
+					print str( order[totalclicks] )  + "," ,
 					if clicked[index] == 1:
 						Q.append(obj='sound', file=(target_audio1[guys[index]]) )
 					elif clicked[index] == 2:
@@ -332,6 +339,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						if clicked[1] >CLICKED_TIMES and clicked[2]>CLICKED_TIMES and clicked[3] > CLICKED_TIMES and clicked[4] > CLICKED_TIMES :
 							finished = True
+							print "}"
 
 def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7, order):
 	
@@ -351,9 +359,10 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 	img[7] = CommandableImageSprite( screen, octuple_displayat[6], images[wrong6], scale=QUAD_IMAGE_SCALE )
 	img[8] = CommandableImageSprite( screen, octuple_displayat[7], images[wrong7], scale=QUAD_IMAGE_SCALE )
 
-
+	print filename(target_images[rightid]), str ( octuple_displayat[0] ) , filename(target_images[wrong1]) , str ( octuple_displayat[1] ) , filename(target_images[wrong2]) , str ( octuple_displayat[2] ) ,  filename(target_images[wrong3]) , str ( octuple_displayat[3] ) ,
+	print filename(target_images[wrong4]), str ( octuple_displayat[4] ) , filename(target_images[wrong5]) , str ( octuple_displayat[5] ) , filename(target_images[wrong6]) , str ( octuple_displayat[6] ) ,  filename(target_images[wrong7]) , str ( octuple_displayat[7] ) ,"{" ,
 	def guytonumber(person):  ##should probably be a switch
-		print person
+		##print person
 		if person == rightid:
 			return 1
 		elif person == wrong1:
@@ -416,7 +425,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 
 
 			if whom is img[0] :  ## which is the button btw
-				print "BUTTON PRESS: " + str(time() - start_time) , 
+				#print "BUTTON PRESS: " + str(time() - start_time) , 
 				if all(donezo):
 					pass
 				else:
@@ -425,8 +434,9 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 					#print "Before " + str( totalclicks) + "and " + str( order[totalclicks] )
 
 					index = guytonumber(order[totalclicks]) ##convert that index from the main list to the internal index.
-					print filename(target_images[guys[index]])
+					#print filename(target_images[guys[index]])
 					clicked[index] = clicked[index] + 1
+					print str( order[totalclicks] ) + "," ,
 					if clicked[index] == 1:
 						Q.append(obj='sound', file=(target_audio1[guys[index]]) )
 					elif clicked[index] == 2:
@@ -451,6 +461,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						if clicked[1] >CLICKED_TIMES and clicked[2]>CLICKED_TIMES and clicked[3] > CLICKED_TIMES and clicked[4] > CLICKED_TIMES and clicked[5] >CLICKED_TIMES and clicked[6]>CLICKED_TIMES and clicked[7] > CLICKED_TIMES and clicked[8] > CLICKED_TIMES:
 							finished = True
+							print "}"
 			
 	
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -583,7 +594,6 @@ sixteen_displayat =[
 	( ((screen.get_width()/6)*5, ((screen.get_height()/4)*3) )) ]
 
 
-timer = time()
 
 ##present a number of blocks
 
@@ -603,10 +613,10 @@ seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
 
-display_wait_scene()
-print present_no_choice_single(target_images, seeds[0])
-display_wait_scene()
-display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE, timer)
+#display_wait_scene()
+#print present_no_choice_single(target_images, seeds[0])
+#display_wait_scene()
+#display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
 # print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
 	numbers = []
@@ -618,7 +628,8 @@ def pickrandom(number):
 			numbers.append(pick)
 			picks = picks + 1
 	return numbers
-display_wait_scene()
+#display_wait_scene()
+
 for block in range(1):	  ########## NOTE: You can adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	 ## this is that function above ^^ to pick some non-repeating random integers
 	shuffle(double_displayat)
@@ -628,10 +639,10 @@ for block in range(1):	  ########## NOTE: You can adjust the amount of times thi
 		order.append(  seeds[1]  )
 		order.append(  seeds[2] )
 		shuffle( order )
-	print present_no_choice_double(target_images, seeds[1], seeds[2], order )
+	present_no_choice_double(target_images, seeds[1], seeds[2], order )
 
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE, timer)
+display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE)
 display_wait_scene()
 
 
@@ -648,10 +659,10 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 		order.append( seeds[6] )
 		shuffle( order )
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
-	print present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order )
+	present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order )
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE, timer)
+display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE)
 display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 
@@ -674,14 +685,14 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 		order.append( seeds[14]  )
 		shuffle( order )
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
-	print present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order )
+	present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order )
 
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE , timer)
+display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
 seeds = pickrandom(15) ##reshuffle the order of stims.
-display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE , timer)
+display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
 
