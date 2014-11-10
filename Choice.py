@@ -537,7 +537,7 @@ targetidx = randint(0,(len(target_images)-1))
 
 display_wait_scene()
 print present_choice_single(target_images, [ seeds[0] ])
-display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE , timer)
+display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
 # print "CHOICE DOUBLES:" ################
@@ -547,7 +547,7 @@ for block in range(1):	  ########## NOTE: adjust the amount of times this runs a
 	print present_choice_double(target_images, seeds[1], seeds[2] )
 display_wait_scene()
 
-display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE, timer )
+display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
 
 display_wait_scene()
 # print "CHOICE QUADRUPLES:" ############################
@@ -560,7 +560,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 display_wait_scene()
 
-display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE, timer )
+display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE )
 
 display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
@@ -570,12 +570,12 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 	print present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] )
 
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE, timer)
+display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE)
 display_wait_scene()
 
 
 
 seeds = pickrandom(15) ##reshuffle those images.
-display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE, timer)
+display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE)
 display_wait_scene()
 

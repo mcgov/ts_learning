@@ -98,7 +98,7 @@ def present_no_choice_single(images, targetidx):
 	img[1] = CommandableImageSprite( screen, double_displayat[1], images[targetidx], scale=QUAD_IMAGE_SCALE)
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
-	print filename(images[targetidx]), str( spot.center )
+	print filename(images[targetidx]), str( spot.center ), "{SINGLE}"
 	# A queue of animation operations
 	Q = DisplayQueue()
 	
@@ -613,11 +613,11 @@ seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
 
-#display_wait_scene()
-#print present_no_choice_single(target_images, seeds[0])
-#display_wait_scene()
-#display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
-# print "CHOICE DOUBLES:" #################!# Can use random.sample
+display_wait_scene()
+print present_no_choice_single(target_images, seeds[0])
+display_wait_scene()
+display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
+#print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
 	numbers = []
 	picks = 0
