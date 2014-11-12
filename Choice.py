@@ -539,26 +539,28 @@ targetidx = randint(0,(len(target_images)-1))
 
 curtime = strftime("%a, %d %b %Y %H:%M:%S +0000", localtime()).replace(",", "").replace(" ", "_").replace("+", "").replace(":","")
 
+"""
+## stuff to write to a csv file. Change the print statements on naming scenes and task runs to OUTPUTFILE.write( <the line without 'print'> + '\n' )
 CURRENTDIR = os.getcwd()
 DATADIR = CURRENTDIR+ "/data"
 OUTPUTFILENAME = DATADIR + "/RUN_"+ curtime + ".csv"
 OUTPUTFILE = open( OUTPUTFILENAME, "w")
-
+"""
 display_wait_scene()
 
-OUTPUTFILE.write( present_choice_single(target_images, [ seeds[0] ])  + "n")
+print present_choice_single(target_images, [ seeds[0] ]) 
 
-display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE )
+print display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
 # print "CHOICE DOUBLES:" ################
 for block in range(1):	  ########## NOTE: adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	shuffle(double_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
-	OUTPUTFILE.write( present_choice_double(target_images, seeds[1], seeds[2] ) + "\n" )
-display_wait_scene()
+	print present_choice_double(target_images, seeds[1], seeds[2] ) 
+print display_wait_scene()
 
-display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
+print display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
 
 display_wait_scene()
 # print "CHOICE QUADRUPLES:" ############################
@@ -567,26 +569,26 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
 	shuffle(quadruple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
-	OUTPUTFILE.write( present_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6] ) + "\n")
+	print present_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6] ) 
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 display_wait_scene()
 
-display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE )
+print display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE )
 
 display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 for block in range (1):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
 	shuffle (octuple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
-	OUTPUTFILE.write( present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] ) + "\n" )
+	print present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] ) 
 
 display_wait_scene()
-display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE)
+print display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE)
 display_wait_scene()
 
 
 
 seeds = pickrandom(15) ##reshuffle those images.
-display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE)
+print display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE)
 display_wait_scene()
 

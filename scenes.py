@@ -85,7 +85,7 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 			if whom is not img[0] and whom is not None:
 				for i in range (0 , len(img)):
 					if whom is img[i]:
-						output_string += "{NS: " + str( seeds[clicked] ) + ',' + str( i-1 ) + "," + str(time() - timer ) + "}"
+						output_string += "{NS: " + str( seeds[clicked] ) + ',' + str( i-1 ) + "," + str(time() - timer ) + "} , "
 				clicked += 1
 				#print len(seeds)-1, clicked
 				if  clicked > len( seeds )-1 :
