@@ -8,7 +8,6 @@ from kelpy.DisplayQueue import *
 from kelpy.OrderedUpdates import *
 from kelpy.EventHandler import *
 
-
 def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	
 	shuffle( sixteen_displayat )
@@ -64,6 +63,8 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 	pickthisone = None
 	pickthisone = seeds[0]
 	
+	output_string = ""
+
 	Q.append(obj='sound', file= find_audio[pickthisone])
 	timer = time()
 	#print pickthisone, seeds[0] , clicked
@@ -84,12 +85,12 @@ def display_naming_scene( screen, images, seeds , sixteen_displayat, SCALE):
 			if whom is not img[0] and whom is not None:
 				for i in range (0 , len(img)):
 					if whom is img[i]:
-						print "{NS: " + str( seeds[clicked] ) + ',' + str( i-1 ) + "," + str(time() - timer ) + "}"
+						output_string += "{NS: " + str( seeds[clicked] ) + ',' + str( i-1 ) + "," + str(time() - timer ) + "}"
 				clicked += 1
 				#print len(seeds)-1, clicked
 				if  clicked > len( seeds )-1 :
 					finished = True
-					break
+					return output_string
 				else:
 					Q.append(obj='sound', file= find_audio[ seeds[clicked] ], wait=True )
 					timer = time()

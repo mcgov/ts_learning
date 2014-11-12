@@ -10,6 +10,8 @@ import os, sys
 import pygame
 from random import randint, choice, sample, shuffle
 from time import time
+from time import strftime
+from time import localtime
 
 from kelpy.CommandableImageSprite import *
 from kelpy.Miscellaneous import *
@@ -127,7 +129,7 @@ def present_choice_single(images, targetidx):
 
 			if whom is img[1]:  ## which is the button btw
 				if timesclicked > CLICK_LIMIT:
-					return "single,"+ str(targetidx[0])
+					return "single,"+ str(targetidx[0]) +',' + str(double_displayat[1]).replace(",",";")
 				else:
 					timesclicked = timesclicked + 1
 					if timesclicked == 1:
@@ -175,7 +177,7 @@ def present_choice_double(images, rightid, wrongid):
 	#Q.append(obj='sound', file=kstimulus("sounds/good_job.wav"))  ## This should be changed to play the proper intro sound for the character. right now it just, quite annoyingly, says "Good job!"
 	finished = False
 	clicked = [0] * 3
-	outputString= "double," + str(rightid) + "," + str(wrongid) +  ",("
+	outputString= "double," + str(rightid) + ";" + str(wrongid) +  ",("
  	## The standard event loop in kelpy -- this loops infinitely to process interactions
 	## and throws events depending on what the user does
 	for event in kelpy_standard_event_loop(screen, Q, dos):
@@ -184,7 +186,7 @@ def present_choice_double(images, rightid, wrongid):
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
 			if clicked[1] > CLICK_LIMIT and clicked[2] > CLICK_LIMIT:
-				return outputString + ")," + "{" + str( double_displayat[0] )+ ";" + str( double_displayat[1] ) + "}"
+				return outputString + "),"  + str( double_displayat[0] ).replace(",",";")+ str(double_displayat[1]).replace(",",";") 
 							# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			for i in range(1,3):
@@ -231,7 +233,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 	img[3] = CommandableImageSprite( screen, quadruple_displayat[2], images[wrong2], scale=QUAD_IMAGE_SCALE )
 	img[4] = CommandableImageSprite( screen, quadruple_displayat[3], images[wrong3], scale=QUAD_IMAGE_SCALE )
 
-	outputString= "quad," + str(rightid) + "," + str(wrong1) + "," + str(wrong2) + "," + str(wrong3) +  ",("
+	outputString= "quad," + str(rightid) + ";" + str(wrong1) + ";" + str(wrong2) + ";" + str(wrong3) +  ",("
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
 	
@@ -258,7 +260,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
 			if clicked[1] > CLICK_LIMIT and clicked[2] > CLICK_LIMIT and clicked [3] > CLICK_LIMIT and clicked[4] > CLICK_LIMIT:
-				return outputString +")," + "{" + str( quadruple_displayat[0] ) + ";" + str( quadruple_displayat[1] ) + ";" + str( quadruple_displayat[2] ) + ";" + str( quadruple_displayat[3] ) + "}"
+				return outputString +")," + str( quadruple_displayat[0] ).replace(",",";")  + str( quadruple_displayat[1] ).replace(",",";") + str( quadruple_displayat[2] ).replace(",",";") + str( quadruple_displayat[3] )
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
@@ -316,7 +318,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 	img[8] = CommandableImageSprite( screen, octuple_displayat[7], images[wrong7], scale=QUAD_IMAGE_SCALE )
 
 
-	outputString= "oct," + str(rightid) + "," + str(wrong1) + "," + str(wrong2) + "," + str(wrong3) +  "," + str(wrong4) + "," + str(wrong5) + "," + str(wrong6) + "," + str(wrong7) +  ",("
+	outputString= "oct," + str(rightid) + ";" + str(wrong1) + ";" + str(wrong2) + ";" + str(wrong3) +  ";" + str(wrong4) + ";" + str(wrong5) + ";" + str(wrong6) + ";" + str(wrong7) +  ",("
 
 	# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 	# Set up the updates, etc. 
@@ -346,7 +348,7 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 			
 			#!# if all([x > 3 for x in clicked]):
 			if clicked[1] >CLICK_LIMIT and clicked[2] > CLICK_LIMIT and clicked[3] > CLICK_LIMIT and clicked[4] > CLICK_LIMIT and clicked[5] > CLICK_LIMIT and clicked[6] > CLICK_LIMIT and clicked[7] > CLICK_LIMIT and clicked[8] > CLICK_LIMIT:
-				return outputString + ")," + "{" + str( octuple_displayat[0]) + ";" + str( octuple_displayat[1] ) + ";" + str( octuple_displayat[2] ) + ";" + str( octuple_displayat[3] ) + ";" + str( octuple_displayat[4] ) + ";" + str( octuple_displayat[5] ) + ";" + str( octuple_displayat[6] ) + ";" + str( octuple_displayat[7] ) + "}"
+				return outputString + ")," + str( octuple_displayat[0]).replace(",",";")  + str( octuple_displayat[1] ).replace(",",";")  + str( octuple_displayat[2] ).replace(",",";") + str( octuple_displayat[3] ).replace(",",";") + str( octuple_displayat[4] ).replace(",",";") + str( octuple_displayat[5] ).replace(",",";") + str( octuple_displayat[6] ) + ";" + str( octuple_displayat[7] ).replace(",",";")
 			# check if each of our images was clickedstr
 			whom = who_was_clicked(dos)
 			
@@ -535,8 +537,17 @@ seeds = pickrandom(15)
 targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
 
+curtime = strftime("%a, %d %b %Y %H:%M:%S +0000", localtime()).replace(",", "").replace(" ", "_").replace("+", "").replace(":","")
+
+CURRENTDIR = os.getcwd()
+DATADIR = CURRENTDIR+ "/data"
+OUTPUTFILENAME = DATADIR + "/RUN_"+ curtime + ".csv"
+OUTPUTFILE = open( OUTPUTFILENAME, "w")
+
 display_wait_scene()
-print present_choice_single(target_images, [ seeds[0] ])
+
+OUTPUTFILE.write( present_choice_single(target_images, [ seeds[0] ])  + "n")
+
 display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE )
 display_wait_scene()
 
@@ -544,7 +555,7 @@ display_wait_scene()
 for block in range(1):	  ########## NOTE: adjust the amount of times this runs a single by adjusting the integer in the parenthesis there <<< --------
 	shuffle(double_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]])
-	print present_choice_double(target_images, seeds[1], seeds[2] )
+	OUTPUTFILE.write( present_choice_double(target_images, seeds[1], seeds[2] ) + "\n" )
 display_wait_scene()
 
 display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE )
@@ -556,7 +567,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 	 #pick some random images to display (by picking random indexes which we'll use to pull things from the array of image locations).
 	shuffle(quadruple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
-	print present_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6] )
+	OUTPUTFILE.write( present_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6] ) + "\n")
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 display_wait_scene()
 
@@ -567,7 +578,7 @@ display_wait_scene()
 for block in range (1):     ########## NOTE: You can adjust the amount of times this runs by adjusting the integer in the parenthesis there <<< --------
 	shuffle (octuple_displayat)
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
-	print present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] )
+	OUTPUTFILE.write( present_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14] ) + "\n" )
 
 display_wait_scene()
 display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE)
