@@ -187,7 +187,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 	
 	# Draw a single animation in if you want!
 	
-	print filename(target_images[rightid]), str ( double_displayat[0] ) , filename(target_images[wrongid]) , str ( double_displayat[1] ) , "{" ,
+	print filename(target_images[rightid]) + ',' + str ( double_displayat[0] ) + ',' + filename(target_images[wrongid]) + ',' + str ( double_displayat[1] ) + ',' + "{" ,
 	# What order do we draw sprites and things in?
 	dos = OrderedUpdates(*img) # Draw and update in this order
 	
@@ -259,9 +259,7 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	img[3] = CommandableImageSprite( screen, quadruple_displayat[2], images[wrong2], scale=QUAD_IMAGE_SCALE )
 	img[4] = CommandableImageSprite( screen, quadruple_displayat[3], images[wrong3], scale=QUAD_IMAGE_SCALE )
 
-	print filename(target_images[rightid]), str ( quadruple_displayat[0] ) , filename(target_images[wrong1]) , str ( quadruple_displayat[1] ) , filename(target_images[wrong2]) , str ( quadruple_displayat[2] ) ,  filename(target_images[wrong3]) , str ( quadruple_displayat[3] ) ,"{" ,
-
-
+	print filename(target_images[rightid]) + "," + str ( quadruple_displayat[0] ) + ',' + filename(target_images[wrong1]) + ',' + str ( quadruple_displayat[1] ) + ',' + filename(target_images[wrong2]) + ',' + str ( quadruple_displayat[2] ) + ',' +  filename(target_images[wrong3]) + ',' + str ( quadruple_displayat[3] ) + ',' + "{" ,
 
 	def guytonumber(person):  ##should probably be a switch
 			##print person
@@ -359,8 +357,8 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 	img[7] = CommandableImageSprite( screen, octuple_displayat[6], images[wrong6], scale=QUAD_IMAGE_SCALE )
 	img[8] = CommandableImageSprite( screen, octuple_displayat[7], images[wrong7], scale=QUAD_IMAGE_SCALE )
 
-	print filename(target_images[rightid]), str ( octuple_displayat[0] ) , filename(target_images[wrong1]) , str ( octuple_displayat[1] ) , filename(target_images[wrong2]) , str ( octuple_displayat[2] ) ,  filename(target_images[wrong3]) , str ( octuple_displayat[3] ) ,
-	print filename(target_images[wrong4]), str ( octuple_displayat[4] ) , filename(target_images[wrong5]) , str ( octuple_displayat[5] ) , filename(target_images[wrong6]) , str ( octuple_displayat[6] ) ,  filename(target_images[wrong7]) , str ( octuple_displayat[7] ) ,"{" ,
+	print filename(target_images[rightid]) +',' + str ( octuple_displayat[0] ) +',' + filename(target_images[wrong1]) + ',' + str ( octuple_displayat[1] ) +',' + filename(target_images[wrong2]) +',' + str ( octuple_displayat[2] ) +',' +  filename(target_images[wrong3]) +',' + str ( octuple_displayat[3] ) ,
+	print filename(target_images[wrong4])+',' + str ( octuple_displayat[4] ) +',' + filename(target_images[wrong5]) +',' + str ( octuple_displayat[5] ) +',' + filename(target_images[wrong6]) +',' + str ( octuple_displayat[6] ) +',' +  filename(target_images[wrong7]) +',' + str ( octuple_displayat[7] ) +',' + "{" ,
 	def guytonumber(person):  ##should probably be a switch
 		##print person
 		if person == rightid:

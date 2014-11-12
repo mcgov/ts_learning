@@ -184,7 +184,7 @@ def present_choice_double(images, rightid, wrongid):
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
 			if clicked[1] > CLICK_LIMIT and clicked[2] > CLICK_LIMIT:
-				return outputString +")"
+				return outputString + ")," + "{" + str( double_displayat[0] )+ ";" + str( double_displayat[1] ) + "}"
 							# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			for i in range(1,3):
@@ -258,7 +258,7 @@ def present_choice_quadruple(images, rightid, wrong1, wrong2, wrong3):
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
 			if clicked[1] > CLICK_LIMIT and clicked[2] > CLICK_LIMIT and clicked [3] > CLICK_LIMIT and clicked[4] > CLICK_LIMIT:
-				return outputString + ")"
+				return outputString +")," + "{" + str( quadruple_displayat[0] ) + ";" + str( quadruple_displayat[1] ) + ";" + str( quadruple_displayat[2] ) + ";" + str( quadruple_displayat[3] ) + "}"
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 			
@@ -346,8 +346,8 @@ def present_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wron
 			
 			#!# if all([x > 3 for x in clicked]):
 			if clicked[1] >CLICK_LIMIT and clicked[2] > CLICK_LIMIT and clicked[3] > CLICK_LIMIT and clicked[4] > CLICK_LIMIT and clicked[5] > CLICK_LIMIT and clicked[6] > CLICK_LIMIT and clicked[7] > CLICK_LIMIT and clicked[8] > CLICK_LIMIT:
-				return outputString + ")"
-			# check if each of our images was clicked
+				return outputString + ")," + "{" + str( octuple_displayat[0]) + ";" + str( octuple_displayat[1] ) + ";" + str( octuple_displayat[2] ) + ";" + str( octuple_displayat[3] ) + ";" + str( octuple_displayat[4] ) + ";" + str( octuple_displayat[5] ) + ";" + str( octuple_displayat[6] ) + ";" + str( octuple_displayat[7] ) + "}"
+			# check if each of our images was clickedstr
 			whom = who_was_clicked(dos)
 			
 			for i in range(1,9):
