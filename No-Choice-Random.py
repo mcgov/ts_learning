@@ -124,7 +124,8 @@ def present_no_choice_single(images, targetidx):
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
 			if finished:
-				break
+				return output_string
+
 			# check if each of our images was clicked
 			whom = who_was_clicked(dos)
 					
@@ -158,7 +159,6 @@ def present_no_choice_single(images, targetidx):
 						Q.append(obj=img[1], action='swapblink', position=(1000,400), image=target_images_gray[targetidx], period=.5, duration=0, rotation=0, scale=QUAD_IMAGE_SCALE, brightness=1.0 )
 						Q.append(obj='sound', file=kstimulus('sounds/Cheek-Pop.wav'))
 						finished = True
-						return output_string
 
 def present_no_choice_double(images, rightid, wrongid, order):
 	
@@ -206,7 +206,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 		# If the event is a click:
 		if is_click(event) and not Q.commands: 
 			if finished: ## If this is the second click, move on to the next thing!
-				break
+				return output_string
 			# check if each of our images was clicked
 			whom = who_was_clicked( dos )
 			
@@ -246,7 +246,7 @@ def present_no_choice_double(images, rightid, wrongid, order):
 							finished = True
 							output_string +=  "},"
 							output_string += str ( double_displayat[0] ).replace(",",";") + str ( double_displayat[1] ).replace(",",";")
-							return output_string
+							
 
 def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 	
@@ -302,7 +302,8 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 		# If the event is a click:
 		if is_click(event) and not Q.commands: 
 			if finished: ## If this is the second click, move on to the next thing!
-				break
+				return output_string
+
 			# check if each of our images was clicked
 			whom = who_was_clicked( dos )
 			
@@ -343,7 +344,6 @@ def present_no_choice_quadruple(images, rightid, wrong1, wrong2, wrong3, order):
 							finished = True
 							output_string += "},"
 							output_string += str( quadruple_displayat[0] ).replace(",",";") + str(quadruple_displayat[1]).replace(",",";") + str(quadruple_displayat[2]).replace(",",";") + str(quadruple_displayat[3]).replace(",",";")
-							return output_string
 
 def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, wrong5, wrong6, wrong7, order):
 	
@@ -415,7 +415,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 		# If the event is a click:
 		if is_click(event) and not Q.commands:
 			if finished: ## If this is the second click, move on to the next thing!
-				break
+				return output_string
 			# check if each of our images was clicked
 			whom = who_was_clicked( dos )
 			
@@ -476,7 +476,7 @@ def present_no_choice_octuple(images, rightid, wrong1, wrong2, wrong3, wrong4, w
 							output_string += str ( octuple_displayat[6] ).replace(",",";") 
 							output_string += str ( octuple_displayat[7] ).replace(",",";") 
 	
-							return output_string 
+							 
 			
 	
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
