@@ -11,6 +11,8 @@ import pygame
 import csv
 from random import randint, choice, sample, shuffle
 from time import time
+from time import strftime
+from time import localtime
 
 from kelpy.CommandableImageSprite import *
 from kelpy.Miscellaneous import *
@@ -609,6 +611,14 @@ sixteen_displayat =[
 	( ((screen.get_width()/6)*5, ((screen.get_height()/4)*3) )) ]
 
 
+##Set up out output file...
+curtime = strftime("%a, %d %b %Y %H:%M:%S +0000", localtime()).replace(",", "").replace(" ", "_").replace("+", "").replace(":","")
+CURRENTDIR = os.getcwd()
+DATADIR = CURRENTDIR+ "/data"
+OUTPUTFILENAME = DATADIR + "/NO_CHOICE_RUN_"+ curtime + ".csv"
+OUTPUTFILE = open( OUTPUTFILENAME, "w")
+
+
 
 ##present a number of blocks
 
@@ -629,9 +639,11 @@ targetidx = randint(0,(len(target_images)-1))
 # print "CHOICE SINGLES:"
 
 display_wait_scene()
-print present_no_choice_single(target_images, seeds[0])
+OUTPUTFILE.write( present_no_choice_single(target_images, seeds[0]) 
+OUTPUTFILE.write("\n");
 display_wait_scene()
-print display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE)
+OUTPUTFILE.write( display_naming_scene(screen, target_images, [seeds[0]], sixteen_displayat , QUAD_IMAGE_SCALE) )
+OUTPUTFILE.write("\n");
 
 #print "CHOICE DOUBLES:" #################!# Can use random.sample
 def pickrandom(number):
@@ -655,10 +667,12 @@ for block in range(1):	  ########## NOTE: You can adjust the amount of times thi
 		order.append(  seeds[1]  )
 		order.append(  seeds[2] )
 		shuffle( order )
-	print present_no_choice_double(target_images, seeds[1], seeds[2], order )
+	OUTPUTFILE.write( present_no_choice_double(target_images, seeds[1], seeds[2], order ) )
+	OUTPUTFILE.write("\n");
 
 display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE)
+OUTPUTFILE.write( display_naming_scene(screen, target_images, seeds[1:3] , sixteen_displayat, QUAD_IMAGE_SCALE) )
+OUTPUTFILE.write("\n");
 display_wait_scene()
 
 
@@ -675,10 +689,13 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 		order.append( seeds[6] )
 		shuffle( order )
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]])
-	print present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order )
+	OUTPUTFILE.write( present_no_choice_quadruple(target_images, seeds[3], seeds[4], seeds[5] ,seeds[6], order ) )
+	OUTPUTFILE.write("\n");
+
 	#!# Or: print present_choice_quadruple(target_images, *seeds)
 display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE)
+OUTPUTFILE.write( display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE) )
+OUTPUTFILE.write("\n");
 display_wait_scene()
 # print "CHOICE OCTUPLES:"  ################################
 
@@ -701,14 +718,18 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 		order.append( seeds[14]  )
 		shuffle( order )
 	#print block, filename(target_images[seeds[0]]),filename(target_images[seeds[1]]), filename(target_images[seeds[2]]), filename(target_images[seeds[3]]), filename(target_images[seeds[4]]), filename(target_images[seeds[5]]), filename(target_images[seeds[6]]), filename(target_images[seeds[7]]),
-	print present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order )
+	OUTPUTFILE.write( present_no_choice_octuple(target_images, seeds[7], seeds[8], seeds[9] ,seeds[10] ,seeds[11] ,seeds[12], seeds[13], seeds[14], order ) )
+	OUTPUTFILE.write("\n");
 
+	
 display_wait_scene()
-print display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE )
+OUTPUTFILE.write( display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE ) )
+OUTPUTFILE.write("\n");
 display_wait_scene()
 
 seeds = pickrandom(15) ##reshuffle the order of stims.
-print display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE )
+OUTPUTFILE.write( display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE ) )
+OUTPUTFILE.write("\n");
 display_wait_scene()
 
 
