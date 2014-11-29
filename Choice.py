@@ -547,7 +547,7 @@ LEARNING_TASK_FILENAME = DATADIR + "/CHOICE_LEARNING_"+ curtime + ".csv"
 NAMING_TASK_FILENAME = DATADIR + "/CHOICE_NAMING_"+ curtime + ".csv"
 
 LEARNING_TASK_FILE = open( LEARNING_TASK_FILENAME, "w")
-NAMING_TASK_FILE = open( LEARNING_TASK_FILENAME, "w")
+NAMING_TASK_FILE = open( NAMING_TASK_FILENAME, "w")
 
 
 display_wait_scene()
@@ -556,7 +556,7 @@ LEARNING_TASK_FILE.write( present_choice_single(target_images, [ seeds[0] ]) )
 LEARNING_TASK_FILE.write("\n");
 
 NAMING_TASK_FILE.write( display_naming_scene(screen, target_images, [ seeds[0] ], sixteen_displayat, QUAD_IMAGE_SCALE ) )
-LEARNING_TASK_FILE.write("\n");
+NAMING_TASK_FILE.write("\n");
 display_wait_scene()
 
 # print "CHOICE DOUBLES:" ################
@@ -569,7 +569,7 @@ for block in range(1):	  ########## NOTE: adjust the amount of times this runs a
 print display_wait_scene()
 
 NAMING_TASK_FILE.write( display_naming_scene(screen, target_images, seeds[1:3], sixteen_displayat, QUAD_IMAGE_SCALE ) )
-LEARNING_TASK_FILE.write("\n");
+NAMING_TASK_FILE.write("\n");
 
 display_wait_scene()
 # print "CHOICE QUADRUPLES:" ############################
@@ -585,7 +585,7 @@ for block in range(1):	########## NOTE: You can adjust the amount of times this 
 display_wait_scene()
 
 NAMING_TASK_FILE.write( display_naming_scene(screen, target_images, seeds[3:7], sixteen_displayat, QUAD_IMAGE_SCALE ) )
-LEARNING_TASK_FILE.write("\n");
+NAMING_TASK_FILE.write("\n");
 
 
 display_wait_scene()
@@ -598,14 +598,14 @@ for block in range (1):     ########## NOTE: You can adjust the amount of times 
 
 display_wait_scene()
 NAMING_TASK_FILE.write( display_naming_scene(screen, target_images, seeds[7:15], sixteen_displayat, QUAD_IMAGE_SCALE) )
-LEARNING_TASK_FILE.write("\n");
+NAMING_TASK_FILE.write("\n");
 display_wait_scene()
 
 
 
 seeds = pickrandom(15) ##reshuffle those images.
 NAMING_TASK_FILE.write( display_naming_scene(screen, target_images, seeds , sixteen_displayat, QUAD_IMAGE_SCALE) )
-LEARNING_TASK_FILE.write("\n");
+NAMING_TASK_FILE.write("\n");
 
 display_wait_scene()
 
